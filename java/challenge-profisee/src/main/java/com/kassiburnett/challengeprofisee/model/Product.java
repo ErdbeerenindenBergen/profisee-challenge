@@ -26,6 +26,8 @@ public class Product {
         this.upcCode = upcCode;
     }
 
+    public Product(){}
+
     public int getProductId() {
         return productId;
     }

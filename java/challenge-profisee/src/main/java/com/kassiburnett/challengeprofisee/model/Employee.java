@@ -2,8 +2,9 @@ package com.kassiburnett.challengeprofisee.model;
 
 import java.time.LocalDate;
 
-public class Customer {
-    private int customerId;
+public class Employee {
+    private int employeeId;
+    private int idOfManager;
     private String firstName;
     private String lastName;
     private String streetAddress;
@@ -13,10 +14,13 @@ public class Customer {
     private int phone;
     private String emailAddress;
     private LocalDate startDate;
+    private LocalDate terminationDate;
 
-    public Customer(int customerId, String firstName, String lastName, String streetAddress, String town,
-                    String state, int zipCode, int phone, String emailAddress, LocalDate startDate) {
-        this.customerId = customerId;
+    public Employee(int employeeId, int idOfManager, String firstName, String lastName, String streetAddress,
+                    String town, String state, int zipCode, int phone, String emailAddress, LocalDate startDate,
+                    LocalDate terminationDate) {
+        this.employeeId = employeeId;
+        this.idOfManager = idOfManager;
         this.firstName = firstName;
         this.lastName = lastName;
         this.streetAddress = streetAddress;
@@ -26,16 +30,25 @@ public class Customer {
         this.phone = phone;
         this.emailAddress = emailAddress;
         this.startDate = startDate;
+        this.terminationDate = terminationDate;
     }
 
-    public Customer(){}
+    public Employee(){}
 
-    public int getCustomerId() {
-        return customerId;
+    public int getEmployeeId() {
+        return employeeId;
     }
 
-    public void setCustomerId(int customerId) {
-        this.customerId = customerId;
+    public void setEmployeeId(int employeeId) {
+        this.employeeId = employeeId;
+    }
+
+    public int getIdOfManager() {
+        return idOfManager;
+    }
+
+    public void setIdOfManager(int idOfManager) {
+        this.idOfManager = idOfManager;
     }
 
     public String getFirstName() {
@@ -108,5 +121,13 @@ public class Customer {
 
     public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
+    }
+
+    public LocalDate getTerminationDate() {
+        return terminationDate;
+    }
+
+    public void setTerminationDate(LocalDate terminationDate) {
+        this.terminationDate = terminationDate;
     }
 }
