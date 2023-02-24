@@ -1,6 +1,15 @@
 BEGIN TRANSACTION;
 
-DROP TABLE IF EXISTS quarterly_bonus, discount, sale, product, customer, employee;
+DROP TABLE IF EXISTS bespoked_user, quarterly_bonus, discount, sale, product, customer, employee;
+
+CREATE TABLE bespoked_user(
+                        user_id serial NOT NULL,
+                        username VARCHAR(50) NOT NULL,
+                        password_hash VARCHAR(200) NOT NULL,
+                        user_role VARCHAR(20) NOT NULL,
+                        CONSTRAINT PK_bespoked_user PRIMARY KEY (user_id),
+                        CONSTRAINT UQ_username UNIQUE (username)
+);
 
 CREATE TABLE product
 (
