@@ -16,8 +16,8 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.kassiburnett.challengeprofisee.dao.UserDao;
 import com.kassiburnett.challengeprofisee.security.jwt.JWTFilter;
-import com.techelevator.security.jwt.JWTFilter;
-import com.techelevator.security.jwt.TokenProvider;
+import com.kassiburnett.challengeprofisee.security.jwt.JWTFilter;
+import com.kassiburnett.challengeprofisee.security.jwt.TokenProvider;
 
 @RestController
 @CrossOrigin

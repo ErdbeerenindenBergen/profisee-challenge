@@ -1,7 +1,7 @@
 package com.kassiburnett.challengeprofisee.security;
 
 import com.kassiburnett.challengeprofisee.security.jwt.JWTConfigurer;
-import com.techelevator.security.jwt.TokenProvider;
+import com.kassiburnett.challengeprofisee.security.jwt.TokenProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
