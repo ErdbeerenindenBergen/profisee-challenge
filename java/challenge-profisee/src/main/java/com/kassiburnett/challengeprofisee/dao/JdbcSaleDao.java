@@ -21,7 +21,7 @@ public class JdbcSaleDao implements SaleDao {
 
     @Override
     public List<Sale> findAllSales() {
-        String sql = "SELECT p.name, c.first_name, c.last_name, s.sale_date, p.sale_price, e.first_name, e.last_name, p.commission_percent " +
+        String sql = "SELECT p.product_name, c.first_name, c.last_name, s.sale_id, s.sale_date, p.sale_price, e.first_name, e.last_name, p.commission_percent " +
                 "FROM sale s " +
                 "JOIN product p ON s.product_id = p.product_id " +
                 "JOIN customer c ON s.customer_id = c.customer_id " +
@@ -33,7 +33,7 @@ public class JdbcSaleDao implements SaleDao {
 
     @Override
     public List<Sale> findSalesByDate(LocalDate startDate, LocalDate endDate) {
-        String sql = "SELECT p.name, c.first_name, c.last_name, s.sale_date, p.sale_price, e.first_name, e.last_name, p.commission_percent " +
+        String sql = "SELECT p.product_name, c.first_name, c.last_name, s.sale_id, s.sale_date, p.sale_price, e.first_name, e.last_name, p.commission_percent " +
                 "FROM sale s " +
                 "JOIN product p ON s.product_id = p.product_id " +
                 "JOIN customer c ON s.customer_id = c.customer_id " +
@@ -45,23 +45,24 @@ public class JdbcSaleDao implements SaleDao {
     }
 
     public List<Sale> returnSaleInformation(SqlRowSet results) {
-        List<Sale> salesToReturn = new ArrayList<>();
+        List<Sale> sales = new ArrayList<>();
 
         while (results.next()) {
             String productName = results.getString(1);
             String customerFirstName = results.getString(2);
             String customerLastName = results.getString(3);
-            LocalDate saleDate = results.getDate(4).toLocalDate();
-            BigDecimal salePrice = results.getBigDecimal(5);
-            String salespersonFirstName = results.getString(6);
-            String salespersonLastName = results.getString(7);
-            BigDecimal commissionPercent = results.getBigDecimal(8);
-            BigDecimal salespersonCommission = salePrice.multiply(commissionPercent);
+            Integer saleId = results.getInt(4);
+            LocalDate saleDate = results.getDate(5).toLocalDate();
+            BigDecimal salePrice = results.getBigDecimal(6);
+            String salespersonFirstName = results.getString(7);
+            String salespersonLastName = results.getString(8);
+            BigDecimal commissionPercentage = results.getBigDecimal(9);
+            BigDecimal salespersonCommission = salePrice.multiply(commissionPercentage);
 
-            Sale sale = new Sale(productName, customerFirstName, customerLastName, saleDate, salePrice, salespersonFirstName, salespersonLastName, commissionPercent, salespersonCommission);
-            salesToReturn.add(sale);
+            Sale sale = new Sale(productName, customerFirstName, customerLastName, saleId, saleDate, salePrice, salespersonFirstName, salespersonLastName, commissionPercentage, salespersonCommission);
+            sales.add(sale);
         }
-        return salesToReturn;
+        return sales;
     }
 
     @Override
