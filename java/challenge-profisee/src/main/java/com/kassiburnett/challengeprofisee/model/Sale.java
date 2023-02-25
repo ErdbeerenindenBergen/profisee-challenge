@@ -1,5 +1,6 @@
 package com.kassiburnett.challengeprofisee.model;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class Sale {
@@ -8,6 +9,26 @@ public class Sale {
     private int salespersonId;
     private int customerId;
     private LocalDate saleDate;
+    private String productName;
+    private String customerFirstName;
+    private String customerLastName;
+    private BigDecimal salePrice;
+    private String salespersonFirstName;
+    private String salespersonLastName;
+    private BigDecimal commissionPercent;
+    private BigDecimal salespersonCommission;
+
+    public Sale(String productName, String customerFirstName, String customerLastName, LocalDate saleDate, BigDecimal salePrice, String salespersonFirstName, String salespersonLastName, BigDecimal commissionPercent, BigDecimal salespersonCommission) {
+        this.saleDate = saleDate;
+        this.productName = productName;
+        this.customerFirstName = customerFirstName;
+        this.customerLastName = customerLastName;
+        this.salePrice = salePrice;
+        this.salespersonFirstName = salespersonFirstName;
+        this.salespersonLastName = salespersonLastName;
+        this.commissionPercent = commissionPercent;
+        this.salespersonCommission = salespersonCommission;
+    }
 
     public Sale(int saleId, int productId, int salespersonId, int customerId, LocalDate saleDate) {
         this.saleId = saleId;
