@@ -10,7 +10,7 @@ public class Customer {
     private String town;
     private String state;
     private int zipCode;
-    private int phone;
+    private long phone;
     private String emailAddress;
     private LocalDate startDate;
 
@@ -86,11 +86,11 @@ public class Customer {
         this.zipCode = zipCode;
     }
 
-    public int getPhone() {
+    public long getPhone() {
         return phone;
     }
 
-    public void setPhone(int phone) {
+    public void setPhone(long phone) {
         this.phone = phone;
     }
 

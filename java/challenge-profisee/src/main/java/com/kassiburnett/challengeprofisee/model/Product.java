@@ -11,7 +11,7 @@ public class Product {
     private BigDecimal salePrice;
     private int qtyOnHand;
     private BigDecimal commissionPercent;
-    private int upcCode;
+    private long upcCode;
 
     public Product(int productId, String name, String manufacturer, String style, BigDecimal purchasePrice,
                    BigDecimal salePrice, int qtyOnHand, BigDecimal commissionPercent, int upcCode) {
@@ -92,11 +92,11 @@ public class Product {
         this.commissionPercent = commissionPercent;
     }
 
-    public int getUpcCode() {
+    public long getUpcCode() {
         return upcCode;
     }
 
-    public void setUpcCode(int upcCode) {
+    public void setUpcCode(long upcCode) {
         this.upcCode = upcCode;
     }
 }

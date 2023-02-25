@@ -10,5 +10,5 @@ public interface ProductDao {
     List<Product> findAllProducts();
 
     //update a product
-    Product updateProduct();
+    Product updateProduct(Product product);
 }
