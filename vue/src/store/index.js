@@ -15,6 +15,7 @@ export default new Vuex.Store({
   state: {
     token: currentToken || '',
     user: currentUser || {},
+    employee: Object
   },
   mutations: {
     SET_AUTH_TOKEN(state, token) {

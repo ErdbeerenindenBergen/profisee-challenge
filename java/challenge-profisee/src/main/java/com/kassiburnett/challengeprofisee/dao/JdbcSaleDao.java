@@ -32,14 +32,16 @@ public class JdbcSaleDao implements SaleDao {
     }
 
     @Override
-    public List<Sale> findSalesByDate(LocalDate startDate, LocalDate endDate) {
+    public List<Sale> findSalesByDate(String startDate, String endDate) {
+        LocalDate begin = LocalDate.parse(startDate);
+        LocalDate end = LocalDate.parse(endDate);
         String sql = "SELECT p.product_name, c.first_name, c.last_name, s.sale_id, s.sale_date, p.sale_price, e.first_name, e.last_name, p.commission_percent " +
                 "FROM sale s " +
                 "JOIN product p ON s.product_id = p.product_id " +
                 "JOIN customer c ON s.customer_id = c.customer_id " +
                 "JOIN employee e ON s.salesperson_id = e.employee_id " +
                 "WHERE s.sale_date BETWEEN ? AND ?;";
-        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, startDate, endDate);
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, begin, end);
 
         return returnSaleInformation(results);
     }

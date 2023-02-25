@@ -11,7 +11,7 @@ public interface SaleDao {
     // customer, date, price, salesperson, salesperson commission
     List<Sale> findAllSales();
 
-    List<Sale> findSalesByDate(LocalDate startDate, LocalDate endDate);
+    List<Sale> findSalesByDate(String startDate, String endDate);
 
     //create a sale
     boolean createSale(Sale sale);

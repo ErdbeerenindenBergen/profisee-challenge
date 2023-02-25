@@ -10,9 +10,9 @@ export default {
         return http.get('/sales');
     },
 
-    // getSalesByDate(){
-    //     return http.get(`/sales/${startDate}/${endDate}`);
-    // },
+    getSalesByDate(startDate, endDate){
+        return http.post(`/sales/${startDate}/${endDate}`);
+    },
 
     // createSale(sale){
     //     return http.post(`/sales/create`, newSale)

@@ -1,22 +1,19 @@
 <template>
     <div id="sales-page">
-
         <div class="tab-buttons">
-            <button type="button" id="see-all-sales" class="button" v-on:click="seeAllSales()">
+            <button type="button" id="see-all-sales" class="button" v-on:click="showSeeAllSales()">
                 See All Sales
             </button>
 
-            <button type="button" id="filter-sales-by-date" class="button" v-on:click="filterSalesByDate()">
+            <button type="button" id="filter-sales-by-date" class="button" v-on:click="showFilterSalesByDate()">
                 Filter Sales by Date
             </button>
 
-            <button type="button" id="add-new-sale" class="button" v-on:click="addNewSale()">
+            <button type="button" id="add-new-sale" class="button" v-on:click="showAddNewSale()">
                 Add New Sale
             </button>
 
-            <button type="button" id="create-sale-button" class="button" v-on:click="createSale()">
-                Submit
-            </button>
+
         </div>
 
         <div id="see-all-sales-tab">
@@ -24,10 +21,32 @@
             </sales-display>
         </div>
 
-        <div id="filter-sales-by-date-tab">
-            <!-- <sales-display class="card" v-for="sale in sales" :key="sale.saleId" v-bind:sale="sale">
-            </sales-display> -->
-        </div>
+        <!-----------------------------------------Enter Dates----------------------------------------->
+        <form id="event-form" name="form" @submit=filterSalesByDate()>
+
+            <div id="filter-sales-by-date-tab">
+                <div class="date-inputs">
+                    <div class="left-side-date">
+                        <h2>Start Date:</h2>
+                        <input type="date" class="date-input" name="start-date" v-model="startDate"
+                            placeholder="mm/dd/yyyy" />
+                    </div>
+
+                    <div class="right-side-date">
+                        <h2>End Date:</h2>
+                        <input type="date" class="date-input" name="end-date" v-model="endDate" placeholder="mm/dd/yyyy" />
+                    </div>
+                </div>
+
+                <button type="button" id="show-sales-by-date-button" class=" submit-button button"
+                    v-on:click="filterSalesByDate()">
+                    Submit
+                </button>
+
+                <sales-display class="card" v-for="sale in salesByDate" :key="sale.saleId" v-bind:sale="sale">
+                </sales-display>
+            </div>
+        </form>
 
         <div id="add-new-sale-tab">
         </div>
@@ -46,10 +65,12 @@ export default {
     components: {
         SalesDisplay,
     },
-    // props: ["sale"],
     data() {
         return {
             sales: [],
+            salesByDate: [],
+            startDate: Date,
+            endDate: Date,
         }
     },
     created() {
@@ -58,7 +79,23 @@ export default {
         });
     },
     methods: {
-        seeAllSales() {
+        filterSalesByDate() {
+            let startDate = document.forms["form"]["start-date"].value;
+            let endDate = document.forms["form"]["end-date"].value;
+            if (startDate == null || startDate == "" ||
+                endDate == null || endDate == ""
+            ) {
+                alert("Please be sure to enter a start date and end date.");
+                return false;
+            }
+            this.startDate = this.moment(this.startDate).format("YYYY-MM-DD");
+            this.endDate = this.moment(this.endDate).format("YYYY-MM-DD");
+            SalesService.getSalesByDate(this.startDate, this.endDate).then((response) => {
+                this.salesByDate = response.data;
+                console.dir(this.salesByDate);
+            });
+        },
+        showSeeAllSales() {
             const salesDisplayTab = document.getElementById("see-all-sales-tab");
             const salesDisplayByDate = document.getElementById("filter-sales-by-date-tab");
             const newSaleForm = document.getElementById("add-new-sale-tab");
@@ -75,8 +112,7 @@ export default {
             buttonTwo.style.color = "#666666";
             buttonThree.style.color = "#666666";
         },
-
-        filterSalesByDate() {
+        showFilterSalesByDate() {
             const salesDisplayTab = document.getElementById("see-all-sales-tab");
             const salesDisplayByDate = document.getElementById("filter-sales-by-date-tab");
             const newSaleForm = document.getElementById("add-new-sale-tab");
@@ -93,8 +129,7 @@ export default {
             buttonTwo.style.color = "white";
             buttonThree.style.color = "#666666";
         },
-
-        addNewSale() {
+        showAddNewSale() {
             const salesDisplayTab = document.getElementById("event-form-tab");
             const salesDisplayByDate = document.getElementById("filter-sales-by-date-tab");
             const newSaleForm = document.getElementById("add-new-sale-tab");
@@ -129,9 +164,15 @@ h1 {
     padding-top: 15px;
 }
 
-#step-1-create-event {
+#see-all-sales {
     background-color: #b1b1b1;
     color: white;
+}
+
+.date-inputs {
+    display: flex;
+    justify-content: space-around;
+    padding: 5px 100px;
 }
 
 a.router-link-active {
@@ -158,6 +199,10 @@ h2 {
     font-weight: normal;
 }
 
+#see-all-sales-tab {
+    padding-top: 50px;
+}
+
 .tab-buttons {
     display: flex;
     flex-direction: row;
@@ -179,7 +224,7 @@ h2 {
     display: flex;
 }
 
-#create-event-button {
+#create-sale-button {
     background-color: #a64d79ff;
     color: white;
 }
@@ -295,17 +340,7 @@ input.location {
     font-size: 16px;
 }
 
-#submit-button {
-    background-color: #a64d79ff;
-    color: white;
-    border: none;
-    text-decoration: none;
-    font-size: 15px;
-    font-weight: bold;
-    border-radius: 10px;
-    width: 100px;
-    padding: 12px 12px;
-}
+
 
 label {
     font-family: Montserrat;
@@ -313,7 +348,7 @@ label {
 }
 
 select {
-    -webkit-appearance: none;
+    display: none;
     border: none;
     font-family: Montserrat;
     color: #666666;
@@ -325,13 +360,23 @@ option {
     padding: 5px;
 }
 
-#submit-button:focus {
-    background: #e06666;
+
+.submit-button {
+    margin: auto;
+    margin-top: 30px;
+    background-color: #124f5cff;
+    color: white;
 }
 
-#submit-button:hover {
-    background: #741b47ff;
+.submit-button:hover {
+    background-color: rgb(40, 129, 149);
+    cursor: pointer;
 }
+
+.submit-button:focus{
+    background-color:#666666;
+}
+
 
 @media screen and (max-width: 1200px) {
     .container {

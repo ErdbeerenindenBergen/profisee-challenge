@@ -11,9 +11,7 @@ public interface SalespersonDao {
     List<Employee> findAll();
 
     //Update Salesperson
-    boolean updateSalesperson(Employee employee);
-
-    Employee findSalespersonById(Integer id);
+    Employee updateSalesperson(Employee employee);
 
     //display quarterly sales report
     List<QuarterlyBonus> displaySalesReport();

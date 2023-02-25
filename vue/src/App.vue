@@ -15,7 +15,7 @@
                 src="../src/assets/BespokedBikesLogo.png" alt="bespoked-bikes-logo" />
             </router-link>
             <router-link v-bind:to="{ name: 'home' }">
-              <h1 id="header-title">Bespoked Bikes</h1>
+              <h1 id="header-title">BeSpoked Bikes</h1>
             </router-link>
           </div>
 

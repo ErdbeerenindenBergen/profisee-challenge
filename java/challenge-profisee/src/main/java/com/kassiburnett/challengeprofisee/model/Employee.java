@@ -11,13 +11,15 @@ public class Employee {
     private String town;
     private String state;
     private int zipCode;
-    private int phone;
+    private long phone;
     private String emailAddress;
     private LocalDate startDate;
     private LocalDate terminationDate;
+    private String managerFirstName;
+    private String managerLastName;
 
     public Employee(int employeeId, int idOfManager, String firstName, String lastName, String streetAddress,
-                    String town, String state, int zipCode, int phone, String emailAddress, LocalDate startDate,
+                    String town, String state, int zipCode, long phone, String emailAddress, LocalDate startDate,
                     LocalDate terminationDate) {
         this.employeeId = employeeId;
         this.idOfManager = idOfManager;
@@ -99,11 +101,11 @@ public class Employee {
         this.zipCode = zipCode;
     }
 
-    public int getPhone() {
+    public long getPhone() {
         return phone;
     }
 
-    public void setPhone(int phone) {
+    public void setPhone(long phone) {
         this.phone = phone;
     }
 
@@ -129,5 +131,21 @@ public class Employee {
 
     public void setTerminationDate(LocalDate terminationDate) {
         this.terminationDate = terminationDate;
+    }
+
+    public String getManagerFirstName() {
+        return managerFirstName;
+    }
+
+    public void setManagerFirstName(String managerFirstName) {
+        this.managerFirstName = managerFirstName;
+    }
+
+    public String getManagerLastName() {
+        return managerLastName;
+    }
+
+    public void setManagerLastName(String managerLastName) {
+        this.managerLastName = managerLastName;
     }
 }

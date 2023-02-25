@@ -4,7 +4,6 @@ import com.kassiburnett.challengeprofisee.dao.SaleDao;
 import com.kassiburnett.challengeprofisee.model.Sale;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import java.time.LocalDate;
 import java.util.List;
 
 @CrossOrigin
@@ -27,7 +26,7 @@ public class SaleController {
 
     @PreAuthorize("hasRole('ROLE_USER')")
     @RequestMapping(path = "/{startDate}/{endDate}", method = RequestMethod.GET)
-    public List<Sale> getSalesByDate(@PathVariable("startDate") LocalDate startDate, @PathVariable("endDate") LocalDate endDate) {
+    public List<Sale> getSalesByDate(@PathVariable("startDate") String startDate, @PathVariable("endDate") String endDate) {
         return saleDao.findSalesByDate(startDate, endDate);
     }
 
