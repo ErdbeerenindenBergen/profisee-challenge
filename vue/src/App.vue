@@ -2,85 +2,55 @@
   <div id="app">
     <div id="header-top">
       <header id="header">
-        <link rel="preconnect" href="https://fonts.googleapis.com" /><link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossorigin
-        /><link
-          href="https://fonts.googleapis.com/css2?family=Playfair+Display"
-          rel="stylesheet"
-        />
-        <link
-          rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-        />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link href="https://fonts.googleapis.com/css2?family=Playfair+Display" rel="stylesheet" />
+        <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
 
         <div class="header-with-hamburger">
-        
-        <div id="header-left">
-         <router-link v-bind:to="{ name: 'home' }"><img
-            id="tb-logo"
-            src="../src/assets/Taste-Buds.png"
-            alt="taste-buds-logo"
-          />
-          </router-link>
 
-          <router-link v-bind:to="{ name: 'home' }">
-          <h1 id="header-title">taste buds</h1>
-          </router-link>
-        </div>
-
-        <div id="header-right">
-          <div class="hamburger-menu-shape">
-            <div
-              id="hamburger"
-              class="hamburger"
-              v-on:click="mobileMenu()"
-            >
-            <!-- v-on:click="mobileMenu(), (userProfileMenuIsOpen = true)" -->
-              <span class="bar"></span>
-              <span class="bar"></span>
-              <span class="bar"></span>
-            </div>
+          <div id="header-left">
+            <router-link v-bind:to="{ name: 'home' }"><img id="bespoked-bikes-logo"
+                src="../src/assets/BespokedBikesLogo.png" alt="bespoked-bikes-logo" />
+            </router-link>
+            <router-link v-bind:to="{ name: 'home' }">
+              <h1 id="header-title">Bespoked Bikes</h1>
+            </router-link>
           </div>
-        </div>
-        
+
+          <div id="header-right">
+            <div class="hamburger-menu-shape">
+              <div id="hamburger" class="hamburger" v-on:click="mobileMenu()">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+              </div>
+            </div>
+          
+          </div>
+
         </div>
 
         <nav id="myLinks" class="navbar">
           <ul class="nav-menu">
             <li class="nav-item" @click="mobileMenu()">
-              <router-link class="nav-link" v-bind:to="{ name: 'find' }"
-                >Find restaurant</router-link
-              >
+              <router-link class="nav-link" v-bind:to="{ name: 'customers' }">Customers</router-link>
             </li>
             <li class="nav-item" @click="mobileMenu()">
-              <router-link class="nav-link" v-bind:to="{ name: 'invite-buds' }"
-                >Invite buds</router-link
-              >
+              <router-link class="nav-link" v-bind:to="{ name: 'salespersons' }">Salespersons</router-link>
             </li>
             <li class="nav-item" @click="mobileMenu()">
-              <router-link class="nav-link"  v-bind:to="{ name: 'events' }"
-                >Events</router-link
-              >
+              <router-link class="nav-link" v-bind:to="{ name: 'products' }">Products</router-link>
             </li>
             <li class="nav-item" @click="mobileMenu()">
-              <router-link class="nav-link" v-bind:to="{ name: 'about' }">About</router-link> 
-          </li>
+              <router-link class="nav-link" v-bind:to="{ name: 'sales' }">Sales</router-link>
+            </li>
             <li class="nav-item" @click="mobileMenu()">
-              <router-link
-                class="nav-link"
-                active-class="active"
-                v-bind:to="{ name: 'log-in' }"
-                v-if="$store.state.token === ''"
-                >Log in</router-link
-              >
-              <router-link
-                class="nav-link"
-                v-bind:to="{ name: 'log-out' }"
-                v-if="$store.state.token != ''"
-                >Log out</router-link
-              >
+              <router-link class="nav-link" active-class="active" v-bind:to="{ name: 'log-in' }"
+                v-if="$store.state.token === ''">Log in</router-link>
+              <router-link class="nav-link" v-bind:to="{ name: 'log-out' }" v-if="$store.state.token != ''">Log
+                out</router-link>
             </li>
           </ul>
         </nav>
@@ -112,10 +82,8 @@ export default {
     mobileMenu() {
       let hamburger = document.querySelector(".hamburger");
       let navMenu = document.querySelector(".nav-menu");
-      let navBar = document.querySelector(".nav-bar");
       hamburger.classList.toggle("active");
       navMenu.classList.toggle("active");
-      navBar.classList.toggle("active");
     },
     turnOffFindView() {
       let targetDiv = document.getElementById("find");
@@ -171,7 +139,7 @@ a {
   padding-top: 100px;
 }
 
-#tb-logo {
+#bespoked-bikes-logo {
   padding-left: 5px;
   height: 60px;
   width: auto;
@@ -277,11 +245,11 @@ a:hover {
   font-weight: bold;
 }
 
-#header-title{
-  padding-left:15px;
+#header-title {
+  padding-left: 15px;
 }
 
-.nav-item{
+.nav-item {
   padding-right: 20px;
 }
 
@@ -326,7 +294,7 @@ a:hover {
     margin: 5px;
   }
 
-  .nav-item{
+  .nav-item {
     padding-right: 20px;
   }
 
@@ -336,19 +304,19 @@ a:hover {
     width: auto;
     margin: auto;
     margin-top: 5px;
-    margin-right:7px;
+    margin-right: 7px;
   }
 
-  #router-link{
-    padding-left:none;
+  #router-link {
+    padding-left: none;
     margin-left: none;
   }
 
-  ul{
-    padding-left:0px;
+  ul {
+    padding-left: 0px;
   }
 
-  .hamburger-menu-shape{
+  .hamburger-menu-shape {
     right: 5px;
     position: absolute;
   }
@@ -378,30 +346,26 @@ a:hover {
     margin: 5px;
   }
 
-  .nav-bar {
-    display: none;
-  }
-
   .hamburger {
     display: block;
     cursor: pointer;
-    margin-right:26px;
+    margin-right: 26px;
   }
 
-  .hamburger-menu-shape{
+  .hamburger-menu-shape {
     display: flex;
   }
 
-  .header-with-hamburger{
+  .header-with-hamburger {
     display: flex;
     justify-content: space-between;
   }
 
-  #header-right{
+  #header-right {
     align-content: right;
   }
 
-    .hamburger-menu-shape{
+  .hamburger-menu-shape {
     right: 5px;
     position: absolute;
   }

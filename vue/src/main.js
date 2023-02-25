@@ -6,7 +6,7 @@ import axios from 'axios';
 import moment from 'moment';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { faCalendarDays, faMapLocationDot, faPhone, faTrophy } from "@fortawesome/free-solid-svg-icons";
+import { faCalendarDays, faMapLocationDot, faPhone, faTrophy, faPersonBiking, faBicycle } from "@fortawesome/free-solid-svg-icons";
 import { faCalendar } from '@fortawesome/free-regular-svg-icons';
 
 library.add(faPhone);
@@ -14,13 +14,14 @@ library.add(faCalendarDays);
 library.add(faCalendar);
 library.add(faMapLocationDot);
 library.add(faTrophy);
+library.add(faPersonBiking);
+library.add(faBicycle);
 
 Vue.component('icon', FontAwesomeIcon);
 
 Vue.config.productionTip = false;
 
 Vue.prototype.moment = moment;
-
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 

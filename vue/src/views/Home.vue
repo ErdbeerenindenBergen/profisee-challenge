@@ -3,22 +3,46 @@
     <!-- <h1>Home</h1>
     <p>You've logged in!</p> -->
 
-    <div id="icons">
+    <div class="icons">
       <div id="search">
         <a>
-          <font-awesome-icon icon="fa-brands fa-wpexplorer" id="search-icon" @click="pushToSales()"/>
+          <font-awesome-icon class="search-icon" icon="fa-solid fa-person-biking" @click="pushToCustomers()" />
         </a>
-        <p>Discover new places</p>
+        <p>Customers</p>
       </div>
 
-    <div id="plan">
+      <div id="plan">
         <a>
-          <font-awesome-icon id="search-icon" icon="fa-solid fa-users" @click="pushToCustomers()"/>
+          <font-awesome-icon class="search-icon" icon="fa-solid fa-users" @click="pushToSalespersons()" />
         </a>
-        <p>Plan an event</p>
+        <p>Salespersons</p>
+      </div>
+
+      <div id="search">
+        <a>
+          <font-awesome-icon class="search-icon" icon="fa-solid fa-bicycle" @click="pushToProducts()" />
+        </a>
+        <p>Products</p>
+      </div>
+
     </div>
 
-  </div>
+    <div class="icons">
+      <div id="search">
+        <a>
+          <font-awesome-icon class="search-icon" icon="fa-solid fa-dollar-sign" @click="pushToSales()" />
+        </a>
+        <p>Sales</p>
+      </div>
+
+      <div id="plan">
+        <a>
+          <font-awesome-icon class="search-icon" icon="fa-solid fa-chart-line" @click="pushToQuarterlyReports()" />
+        </a>
+        <p>Quarterly Commissions Reports</p>
+      </div>
+
+    </div>
 
   </div>
 </template>
@@ -33,7 +57,21 @@ fontawesome.library.add(brands, solid);
 export default {
   name: "home",
   methods: {
-
+    pushToCustomers(){
+      this.$router.push({name: "customers"})
+    },
+    pushToSalespersons(){
+      this.$router.push({name: "salespersons"})
+    },
+    pushToProducts(){
+      this.$router.push({name: "products"})
+    },
+    pushToSales(){
+      this.$router.push({name: "sales"})
+    },
+    pushToQuarterlyReports(){
+      this.$router.push({name: "quarterly-commissions-reports"})
+    }
   }
 };
 </script>
@@ -46,7 +84,7 @@ h1 {
   padding-top: 40px;
 }
 
-#icons {
+.icons {
   display: flex;
   justify-content: space-evenly;
   padding-top: 30px;
@@ -59,9 +97,9 @@ h1 {
   flex-direction: column;
 }
 
-#search-icon {
+.search-icon {
   color: rgb(200, 199, 200);
-  height: 400px;
+  height: 200px;
   width: auto;
 }
 

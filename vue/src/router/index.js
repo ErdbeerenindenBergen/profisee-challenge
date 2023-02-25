@@ -1,21 +1,17 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-import Home from '../views/Home.vue'
-import Login from '../views/Login.vue'
-import Logout from '../views/Logout.vue'
-import Register from '../views/Register.vue'
-import store from '../store/index'
+import Vue from 'vue';
+import Router from 'vue-router';
+import Home from '../views/Home.vue';
+import Login from '../views/Login.vue';
+import Logout from '../views/Logout.vue';
+import Register from '../views/Register.vue';
+import store from '../store/index';
+import Customers from '../views/Customers.vue';
+import Salespersons from '../views/Salespersons.vue';
+import Products from '../views/Products.vue';
+import QuarterlyCommissionsReports from '../views/QuarterlyCommissionsReports.vue';
+import Sales from '../views/Sales.vue';
 
-Vue.use(Router)
-
-/**
- * The Vue Router is used to "direct" the browser to render a specific view component
- * inside of App.vue depending on the URL.
- *
- * It also is used to detect whether or not a route requires the user to have first authenticated.
- * If the user has not yet authenticated (and needs to) they are redirected to /login
- * If they have (or don't need to) they're allowed to go about their way.
- */
+Vue.use(Router);
 
 const router = new Router({
   mode: 'history',
@@ -54,13 +50,45 @@ const router = new Router({
       }
     },
     {
-      path: "/find",
-      name: "find",
-      component: Restaurant,
+      path: "/customers",
+      name: "customers",
+      component: Customers,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: "/salespersons",
+      name: "salespersons",
+      component: Salespersons,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: "/products",
+      name: "products",
+      component: Products,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: "/quarterly-commissions-reports",
+      name: "quarterly-commissions-reports",
+      component: QuarterlyCommissionsReports,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: "/sales",
+      name: "sales",
+      component: Sales,
       meta: {
         requiresAuth: false
       }
-    }
+    },
   ]
 })
 
