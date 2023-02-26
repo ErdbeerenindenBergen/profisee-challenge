@@ -1,6 +1,7 @@
 package com.kassiburnett.challengeprofisee.dao;
 
 import com.kassiburnett.challengeprofisee.model.Product;
+import com.kassiburnett.challengeprofisee.model.Sale;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
@@ -20,7 +21,6 @@ public class JdbcProductDao implements ProductDao {
     public List<Product> findAllProducts() {
         String sql = "SELECT * FROM product ORDER BY product_id ASC ;";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
-
         List<Product> products = new ArrayList<>();
         while(results.next()) {
             Product product = mapToRow(results);
@@ -38,6 +38,20 @@ public class JdbcProductDao implements ProductDao {
                 product.getPurchasePrice(), product.getSalePrice(), product.getQtyOnHand(), product.getCommissionPercent(),
                 product.getUpcCode(), product.getProductId());
         return product;
+    }
+
+    @Override
+    public Product findProductById(int productId) {
+        String sql = "SELECT * FROM product WHERE product_id = ? ;";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, productId);
+        Product product = mapToRow(results);
+        return product;
+    }
+
+    @Override
+    public void updateStockOfProduct(Sale sale) {
+        String sql = " UPDATE product SET qty_on_hand = qty_on_hand - 1 WHERE product_id = ?;";
+        jdbcTemplate.update(sql, sale.getProductId());
     }
 
     public Product mapToRow(SqlRowSet rs) {

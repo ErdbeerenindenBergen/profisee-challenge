@@ -10,6 +10,7 @@ import Salespersons from '../views/Salespersons.vue';
 import Products from '../views/Products.vue';
 import QuarterlyCommissionsReports from '../views/QuarterlyCommissionsReports.vue';
 import Sales from '../views/Sales.vue';
+import SalesEntryConfirmation from '../views/SaleEntryConfirmation.vue';
 
 Vue.use(Router);
 
@@ -85,6 +86,14 @@ const router = new Router({
       path: "/sales",
       name: "sales",
       component: Sales,
+      meta: {
+        requiresAuth: false
+      }
+    },
+    {
+      path: "/sales-confirmation-page",
+      name: "sales-confirmation-page",
+      component: SalesEntryConfirmation,
       meta: {
         requiresAuth: false
       }

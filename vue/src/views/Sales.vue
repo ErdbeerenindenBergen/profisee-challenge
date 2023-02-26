@@ -2,8 +2,8 @@
     <div id="sales-page">
 
         <div class="tab-buttons">
-            <button type="button" id="see-all-sales" class="button" 
-                :class="{ 'active-button': activeTab === 'allSales' }" @click="showSeeAllSales()">
+            <button type="button" id="see-all-sales" class="button" :class="{ 'active-button': activeTab === 'allSales' }"
+                @click="showSeeAllSales()">
                 See All Sales
             </button>
             <button type="button" id="filter-sales-by-date" class="button" @click="showFilterSalesByDate()">
@@ -67,10 +67,9 @@
                 <input class="input-spaces" type="date" id="new-sale-sale-date" v-model="newSale.saleDate">
             </div>
 
-            <button type="button" id="create-sale-button" class="submit-button button"
-                    v-on:click="createSale()">
-                    Submit
-                </button>
+            <button type="button" id="create-sale-button" class="submit-button button" v-on:click="createSale()">
+                Submit
+            </button>
         </form>
 
     </div>
@@ -93,11 +92,12 @@ export default {
             salesByDate: [],
             startDate: new Date(),
             endDate: new Date(),
+            isSubmitted: false,
             newSale: {
                 productId: '',
                 salespersonId: '',
                 customerId: '',
-                saleDate: ''
+                saleDate: '',
             }
         }
     },
@@ -123,10 +123,9 @@ export default {
                 console.dir(this.salesByDate);
             });
         },
-        createSale(){
-            SalesService.createSale(this.newSale).then((response) => {
-                this.newSale = response.data;
-            })
+        createSale() {
+            SalesService.createSale(this.newSale);
+            this.$router.push({ name: 'sales-confirmation-page' });
         },
         showSeeAllSales() {
             this.activeTab = 'allSales';
@@ -207,13 +206,13 @@ h2 {
 }
 
 .button:active {
-  background-color: #b1b1b1;
-  color: white;
+    background-color: #b1b1b1;
+    color: white;
 }
 
 .button:focus {
-  background-color: #b1b1b1;
-  color: white;
+    background-color: #b1b1b1;
+    color: white;
 }
 
 #create-sale-button {
@@ -274,7 +273,7 @@ p {
     font-weight: normal;
 }
 
-input.input-spaces{
+input.input-spaces {
     display: block;
     padding: 10px 15px;
     border: 3px solid lightgray;

@@ -30,6 +30,7 @@ public class SaleController {
         return saleDao.findSalesByDate(startDate, endDate);
     }
 
+    @CrossOrigin
     @PreAuthorize("hasRole('ROLE_USER')")
     @RequestMapping(path = "/create", method = RequestMethod.POST)
     public boolean createNewSale(@RequestBody Sale sale) {
