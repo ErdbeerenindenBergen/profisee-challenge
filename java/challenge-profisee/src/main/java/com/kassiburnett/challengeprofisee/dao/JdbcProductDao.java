@@ -51,6 +51,12 @@ public class JdbcProductDao implements ProductDao {
         jdbcTemplate.update(sql, sale.getProductId());
     }
 
+    @Override
+    public boolean createProduct(Product product) {
+        String sql = "INSERT INTO product (product_name, manufacturer, product_style, purchase_price, sale_price, qty_on_hand, commission_percent, upc_code) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        return jdbcTemplate.update(sql, product.getName(), product.getManufacturer(), product.getStyle(), product.getPurchasePrice(), product.getSalePrice(), product.getQtyOnHand(), product.getCommissionPercent(), product.getUpcCode()) == 1;
+    }
+
     public Product mapToRow(SqlRowSet rs) {
         Product product = new Product();
         product.setProductId(rs.getInt("product_id"));

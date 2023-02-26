@@ -16,4 +16,6 @@ public interface ProductDao {
     Product findProductById(int productId);
 
     void updateStockOfProduct(Sale sale);
+
+    boolean createProduct(Product product);
 }

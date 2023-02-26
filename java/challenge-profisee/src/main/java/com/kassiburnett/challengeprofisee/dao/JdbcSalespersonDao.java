@@ -1,7 +1,6 @@
 package com.kassiburnett.challengeprofisee.dao;
 
 import com.kassiburnett.challengeprofisee.model.Employee;
-import com.kassiburnett.challengeprofisee.model.QuarterlyBonus;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
@@ -39,8 +38,12 @@ public class JdbcSalespersonDao implements SalespersonDao {
     }
 
     @Override
-    public List<QuarterlyBonus> displaySalesReport() {
-        return null;
+    public boolean createSalesperson(Employee employee) {
+        String sql = "INSERT INTO employee (id_of_manager, first_name, last_name, street_address, town, employee_state, zip_code, phone, email_address, start_date) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        return jdbcTemplate.update(sql, employee.getIdOfManager(), employee.getFirstName(), employee.getLastName(),
+                employee.getStreetAddress(), employee.getTown(), employee.getState(), employee.getZipCode(),
+                employee.getPhone(), employee.getEmailAddress(), employee.getStartDate()) == 1;
     }
 
     private Employee mapRowToEmployee(SqlRowSet rs) {

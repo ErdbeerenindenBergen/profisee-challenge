@@ -13,6 +13,5 @@ public interface SalespersonDao {
     //Update Salesperson
     Employee updateSalesperson(Employee employee);
 
-    //display quarterly sales report
-    List<QuarterlyBonus> displaySalesReport();
+    boolean createSalesperson(Employee employee);
 }

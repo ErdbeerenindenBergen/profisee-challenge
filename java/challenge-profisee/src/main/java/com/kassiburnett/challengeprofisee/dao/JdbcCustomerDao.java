@@ -39,6 +39,16 @@ public class JdbcCustomerDao implements CustomerDao {
         return customer;
     }
 
+    @Override
+    public boolean createCustomer(Customer customer) {
+        String sql = "INSERT INTO customer (first_name, last_name, street_address, town, customer_state, zip_code, phone, email_address, start_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        return jdbcTemplate.update(sql, customer.getFirstName(), customer.getLastName(), customer.getStreetAddress(),
+                customer.getTown(), customer.getState(), customer.getZipCode(), customer.getPhone(),
+                customer.getEmailAddress(), customer.getStartDate()) == 1;
+    }
+
+
+
     private Customer mapRowToCustomer(SqlRowSet results) {
         Customer customer = new Customer();
         customer.setCustomerId(results.getInt("customer_id"));

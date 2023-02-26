@@ -73,6 +73,8 @@ public class JdbcSaleDao implements SaleDao {
         return true;
     }
 
+    
+
     private Sale mapRowToSale(SqlRowSet rs) {
         Sale sale = new Sale();
         sale.setSaleId(rs.getInt("sale_id"));
