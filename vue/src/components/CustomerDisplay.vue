@@ -4,15 +4,14 @@
         <div class="customer-display-information" v-show="activeTab === 'info'">
             <div class="left-side-customers">
                 <h2 id="customer-name">Name: {{ customer.firstName }} {{ customer.lastName }}</h2>
-                <h4 id="customer-id">Customer Id: {{ customer.employeeId }}</h4>
-                <h4 id="customer-address">Address {{ customer.streetAddress }} {{ customer.town }},
+                <h4 id="customer-id">Customer Id: {{ customer.customerId }}</h4>
+                <h4 id="customer-address">Address: {{ customer.streetAddress }} {{ customer.town }},
                     {{ customer.state }} {{ customer.zipCode }}</h4>
                 <h4 id="customer-phone">Phone Number: {{ customer.phone }}</h4>
                 <h4 id="customer-email-address">Email Address: {{ customer.emailAddress }}</h4>
                 <h4 id="customer-start-date">Start Date: {{ customer.startDate }}</h4>
             </div>
         </div>
-
 
         <div class="customer-edit" v-show="activeTab === 'edits'">
             <div class="left-side-customers">

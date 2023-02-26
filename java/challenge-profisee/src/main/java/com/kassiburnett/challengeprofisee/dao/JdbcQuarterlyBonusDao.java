@@ -6,6 +6,7 @@ import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 @Component
 public class JdbcQuarterlyBonusDao implements QuarterlyBonusDao {
@@ -18,37 +19,81 @@ public class JdbcQuarterlyBonusDao implements QuarterlyBonusDao {
 
     @Override
     public CommissionReport getQuarterlyCommissionReport(int quarter, int year, int employeeId) {
+        CommissionReport commissionReport = new CommissionReport();
+        commissionReport.setEmployeeId(employeeId);
+        commissionReport.setQuarter(quarter);
+        commissionReport.setYear(year);
         LocalDate beginDate = null;
         LocalDate endDate = null;
+        String yearString = Integer.toString(year);
+        DateTimeFormatter df = DateTimeFormatter.ofPattern("MM/dd/yyyy");
         if (quarter == 1) {
-            beginDate = LocalDate.parse("01-01-" + year);
-            endDate = LocalDate.parse("03-31-" + year);
+            beginDate = LocalDate.parse("01/01/" + yearString, df);
+            endDate = LocalDate.parse("03/31/" + yearString, df);
         }
         if (quarter == 2) {
-            beginDate = LocalDate.parse("04-01-" + year);
-            endDate = LocalDate.parse("06-30-" + year);
+            beginDate = LocalDate.parse("04/01/" + yearString);
+            endDate = LocalDate.parse("06/30/" + yearString);
         }
         if (quarter == 3) {
-            beginDate = LocalDate.parse("07-01-" + year);
-            endDate = LocalDate.parse("09-30-" + year);
+            beginDate = LocalDate.parse("07/01/" + yearString);
+            endDate = LocalDate.parse("09/30/" + yearString);
         }
         if (quarter == 4) {
-            beginDate = LocalDate.parse("10-01-" + year);
-            endDate = LocalDate.parse("12-31-" + year);
+            beginDate = LocalDate.parse("10/01/" + yearString);
+            endDate = LocalDate.parse("12/31/" + yearString);
         }
-        String sql = "SELECT e.first_name || ' ' || e.last_name AS salesperson_name, \n" + " ROUND(SUM(p.sale_price * p.commission_percent),2) AS commission \n" + " FROM sale s \n" + " JOIN product p ON s.product_id = p.product_id \n" + " JOIN employee e ON s.salesperson_id = e.employee_id \n" + " WHERE s.sale_date BETWEEN ? AND ? AND s.salesperson_id = ? \n" + " GROUP BY e.employee_id \n" + " ORDER BY commission DESC;";
+        String sql = "SELECT e.first_name || ' ' || e.last_name AS salesperson_name, " +
+                " ROUND(SUM(p.sale_price * p.commission_percent),2) AS commission " +
+                " FROM sale s " + " JOIN product p ON s.product_id = p.product_id " +
+                " JOIN employee e ON s.salesperson_id = e.employee_id " +
+                " WHERE s.sale_date BETWEEN ? AND ? AND s.salesperson_id = ? " +
+                " GROUP BY e.employee_id " + " ORDER BY commission DESC;";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, beginDate, endDate, employeeId);
-
-        if (results.next()) {
-            CommissionReport commissionReport = new CommissionReport();
-            commissionReport.setQuarter(quarter);
-            commissionReport.setEmployeeId(employeeId);
-            commissionReport.setYear(year);
-            commissionReport.setSalespersonName(results.getString("salesperson_name"));
-            commissionReport.setTotalCommission(results.getBigDecimal("commission"));
-            return commissionReport;
-        } else {
-            return null;
+        while (results.next()) {
+            commissionReport.setSalespersonName(results.getString(1));
+            commissionReport.setCommission(results.getBigDecimal(2));
         }
+        return commissionReport;
+    }
+
+    @Override
+    public CommissionReport getAllCommissionReportsByQuarter(int quarter, int year, int employeeId) {
+        CommissionReport commissionReport = new CommissionReport();
+        commissionReport.setEmployeeId(employeeId);
+        commissionReport.setQuarter(quarter);
+        commissionReport.setYear(year);
+        LocalDate beginDate = null;
+        LocalDate endDate = null;
+        String yearString = Integer.toString(year);
+        DateTimeFormatter df = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+        if (quarter == 1) {
+            beginDate = LocalDate.parse("01/01/" + yearString, df);
+            endDate = LocalDate.parse("03/31/" + yearString, df);
+        }
+        if (quarter == 2) {
+            beginDate = LocalDate.parse("04/01/" + yearString);
+            endDate = LocalDate.parse("06/30/" + yearString);
+        }
+        if (quarter == 3) {
+            beginDate = LocalDate.parse("07/01/" + yearString);
+            endDate = LocalDate.parse("09/30/" + yearString);
+        }
+        if (quarter == 4) {
+            beginDate = LocalDate.parse("10/01/" + yearString);
+            endDate = LocalDate.parse("12/31/" + yearString);
+        }
+        String sql = "SELECT e.first_name || ' ' || e.last_name AS salesperson_name, " +
+                " ROUND(SUM(p.sale_price * p.commission_percent),2) AS commission " +
+                " FROM sale s " + " JOIN product p ON s.product_id = p.product_id " +
+                " JOIN employee e ON s.salesperson_id = e.employee_id " +
+                " WHERE s.sale_date BETWEEN ? AND ? AND s.salesperson_id = ? " +
+                " GROUP BY e.employee_id " + " ORDER BY commission DESC;";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, beginDate, endDate, employeeId);
+        while (results.next()) {
+            commissionReport.setSalespersonName(results.getString(1));
+            commissionReport.setCommission(results.getBigDecimal(2));
+        }
+        return commissionReport;
     }
 }

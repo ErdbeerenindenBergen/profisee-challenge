@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin
 @RestController
 @PreAuthorize("isAuthenticated()")
-@RequestMapping("/quarterly-commissions")
+@RequestMapping("/commissions")
 public class QuarterlyBonusController {
 
     private final QuarterlyBonusDao quarterlyBonusDao;

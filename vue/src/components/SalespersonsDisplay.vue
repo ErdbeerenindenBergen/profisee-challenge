@@ -5,7 +5,7 @@
             <div class="left-side-salespersons">
                 <h2 id="salesperson-name">Salesperson: {{ salesperson.firstName }} {{ salesperson.lastName }}</h2>
                 <h4 id="employee-id">Employee Id: {{ salesperson.employeeId }}</h4>
-                <h4 id="salesperson-address">Address {{ salesperson.streetAddress }} {{ salesperson.town }},
+                <h4 id="salesperson-address">Address: {{ salesperson.streetAddress }} {{ salesperson.town }},
                     {{ salesperson.state }} {{ salesperson.zipCode }}</h4>
                 <h4 id="salesperson-phone">Phone Number: {{ salesperson.phone }}</h4>
                 <h4 id="salesperson-email-address">Email Address: {{ salesperson.emailAddress }}</h4>

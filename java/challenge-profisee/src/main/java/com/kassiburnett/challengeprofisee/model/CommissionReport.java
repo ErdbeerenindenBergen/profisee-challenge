@@ -1,15 +1,21 @@
 package com.kassiburnett.challengeprofisee.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.math.BigDecimal;
 
 public class CommissionReport {
+
+    @JsonIgnoreProperties(ignoreUnknown = true)
     private int employeeId;
-    private String salespersonName;
-    private BigDecimal totalCommission;
     private int quarter;
     private int year;
+    private String salespersonName;
+    private BigDecimal commission;
 
-    CommissionReport report = new CommissionReport();
+    public CommissionReport() {
+    }
 
     public int getEmployeeId() {
         return employeeId;
@@ -27,20 +33,12 @@ public class CommissionReport {
         this.salespersonName = salespersonName;
     }
 
-    public CommissionReport getReport() {
-        return report;
+    public BigDecimal getCommission() {
+        return commission;
     }
 
-    public void setReport(CommissionReport report) {
-        this.report = report;
-    }
-
-    public BigDecimal getTotalCommission() {
-        return totalCommission;
-    }
-
-    public void setTotalCommission(BigDecimal totalCommission) {
-        this.totalCommission = totalCommission;
+    public void setCommission(BigDecimal commission) {
+        this.commission = commission;
     }
 
     public int getQuarter() {
@@ -58,4 +56,6 @@ public class CommissionReport {
     public void setYear(int year) {
         this.year = year;
     }
+
+
 }
