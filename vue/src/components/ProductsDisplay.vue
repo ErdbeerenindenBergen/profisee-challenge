@@ -1,7 +1,7 @@
 <template>
     <div class="products-card">
 
-        <div class="products-display-information">
+        <div class="products-display-information" v-show="activeTab === 'info'">
             <div class="left-side-products">
                 <h2 id="product-name">Product Name: {{ product.name }}</h2>
                 <h4 id="product-id">Product Id: {{ product.productId }}</h4>
@@ -16,7 +16,7 @@
         </div>
 
 
-        <div class="products-edit">
+        <div class="products-edit" v-show="activeTab === 'edits'">
             <div class="edit-products">
                 <div class="form-line">
                     <label class="form-input-label" for="name">Product Name:</label>
@@ -58,11 +58,13 @@
         </div>
 
         <div class="buttons">
-            <div class="right-side-products">
-                <button class="edit-button button">Edit</button>
+            <div class="right-side-products" >
+                <button class="edit-button button" id="see-edit-inputs" 
+                :class="{ 'active-button': activeTab === 'edits' }" @click="toggleEditInputs()">
+                Edit</button>
             </div>
             <div class="right-side-products">
-                <button class="save-button button" v-on:click="updateProduct()">Save</button>
+                <button class="save-button button"  v-show="activeTab === 'edits'" v-on:click="updateProduct()">Save</button>
             </div>
         </div>
 
@@ -81,6 +83,7 @@ export default {
     components: {},
     data() {
         return {
+            activeTab: 'info',
             updatedProduct: {
                 productId: Number,
                 name: String,
@@ -103,12 +106,20 @@ export default {
             ProductsService.updateProduct(this.updatedProduct).then((response) => {
                 this.updatedProduct = response.data;
             })
+            this.$router.go();
         },
         userIsLoggedIn() {
             let $loggedIn = false;
             if (this.userId != 0) {
                 $loggedIn = true;
             } return $loggedIn;
+        },
+        toggleEditInputs() {
+            if(this.activeTab == 'edits') {
+                this.activeTab = 'info';
+            } else {
+                this.activeTab = 'edits';
+            }
         },
     }
 }

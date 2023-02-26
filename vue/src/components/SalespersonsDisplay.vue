@@ -1,7 +1,7 @@
 <template>
     <div class="sales-card">
 
-        <div class="salesperson-display-information">
+        <div class="salesperson-display-information" v-show="activeTab === 'info'">
             <div class="left-side-salespersons">
                 <h2 id="salesperson-name">Salesperson: {{ salesperson.firstName }} {{ salesperson.lastName }}</h2>
                 <h4 id="employee-id">Employee Id: {{ salesperson.employeeId }}</h4>
@@ -16,7 +16,7 @@
         </div>
 
 
-        <div class="salesperson-edit">
+        <div class="salesperson-edit" v-show="activeTab === 'edits'">
             <div class="left-side-salespersons">
 
                 <div class="form-line">
@@ -80,11 +80,13 @@
         </div>
 
         <div class="buttons">
-            <div class="right-side-salespersons">
-                <button class="edit-button button">Edit</button>
+            <div class="right-side-salespersons" >
+                <button class="edit-button button" id="see-edit-inputs" 
+                :class="{ 'active-button': activeTab === 'edits' }" @click="toggleEditInputs()">
+                Edit</button>
             </div>
             <div class="right-side-salespersons">
-                <button class="save-button button" v-on:click="updateSalesperson()">Save</button>
+                <button class="save-button button" v-show="activeTab === 'edits'" v-on:click="updateSalesperson()">Save</button>
             </div>
         </div>
 
@@ -103,6 +105,7 @@ export default {
     components: {},
     data() {
         return {
+            activeTab: 'info',
             employee: {
                 firstName: String,
                 lastName: String,
@@ -114,7 +117,7 @@ export default {
                 phone: Number,
                 emailAddress: String,
                 startDate: Date,
-                terminationDate: "",
+                terminationDate: '',
                 managerFirstName: String,
                 managerLastName: String,
                 idOfManager: Number
@@ -130,12 +133,20 @@ export default {
             SalespersonService.updateSalesperson(this.employee).then((response) => {
                 this.employee = response.data;
             })
+            this.$router.go();
         },
         userIsLoggedIn() {
             let $loggedIn = false;
             if (this.userId != 0) {
                 $loggedIn = true;
             } return $loggedIn;
+        },
+        toggleEditInputs() {
+            if(this.activeTab == 'edits') {
+                this.activeTab = 'info';
+            } else {
+                this.activeTab = 'edits';
+            }
         },
     }
 }

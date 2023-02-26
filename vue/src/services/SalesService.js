@@ -11,11 +11,11 @@ export default {
     },
 
     getSalesByDate(startDate, endDate){
-        return http.post(`/sales/${startDate}/${endDate}`);
+        return http.get(`/sales/${startDate}/${endDate}`);
     },
 
-    // createSale(sale){
-    //     return http.post(`/sales/create`, newSale)
-    // }
+    createSale(newSale){
+        return http.post(`/sales/create`, newSale)
+    }
 
 }

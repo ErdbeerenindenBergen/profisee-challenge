@@ -31,7 +31,7 @@ public class SaleController {
     }
 
     @PreAuthorize("hasRole('ROLE_USER')")
-    @RequestMapping(path = "/create-new-sale", method = RequestMethod.POST)
+    @RequestMapping(path = "/create", method = RequestMethod.POST)
     public boolean createNewSale(@RequestBody Sale sale) {
         return saleDao.createSale(sale);
     }

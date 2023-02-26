@@ -1,28 +1,26 @@
 <template>
     <div id="sales-page">
+
         <div class="tab-buttons">
-            <button type="button" id="see-all-sales" class="button" v-on:click="showSeeAllSales()">
+            <button type="button" id="see-all-sales" class="button" 
+                :class="{ 'active-button': activeTab === 'allSales' }" @click="showSeeAllSales()">
                 See All Sales
             </button>
-
-            <button type="button" id="filter-sales-by-date" class="button" v-on:click="showFilterSalesByDate()">
+            <button type="button" id="filter-sales-by-date" class="button" @click="showFilterSalesByDate()">
                 Filter Sales by Date
             </button>
-
-            <button type="button" id="add-new-sale" class="button" v-on:click="showAddNewSale()">
+            <button type="button" id="add-new-sale" class="button" @click="showAddNewSale()">
                 Add New Sale
             </button>
-
-
         </div>
 
-        <div id="see-all-sales-tab">
+        <div id="see-all-sales-tab" v-show="activeTab === 'allSales'">
             <sales-display class="card" v-for="sale in sales" :key="sale.saleId" v-bind:sale="sale">
             </sales-display>
         </div>
 
-        <!-----------------------------------------Enter Dates----------------------------------------->
-        <form id="event-form" name="form" @submit=filterSalesByDate()>
+        <!-----------------------------------List Sales Within Date Range----------------------------------->
+        <form id="event-form" name="form" @submit.prevent="filterSalesByDate()" v-show="activeTab === 'filterSalesByDate'">
 
             <div id="filter-sales-by-date-tab">
                 <div class="date-inputs">
@@ -34,11 +32,12 @@
 
                     <div class="right-side-date">
                         <h2>End Date:</h2>
-                        <input type="date" class="date-input" name="end-date" v-model="endDate" placeholder="mm/dd/yyyy" />
+                        <input type="date" class="date-input" name="end-date" v-model="endDate" placeholder="mm/dd/yyyy"
+                            @keydown.enter.exact.prevent="filterSalesByDate()" />
                     </div>
                 </div>
 
-                <button type="button" id="show-sales-by-date-button" class=" submit-button button"
+                <button type="button" id="show-sales-by-date-button" class="submit-button button"
                     v-on:click="filterSalesByDate()">
                     Submit
                 </button>
@@ -48,29 +47,58 @@
             </div>
         </form>
 
-        <div id="add-new-sale-tab">
-        </div>
+        <!-----------------------------------------Add A New Sale----------------------------------------->
 
+        <form class="add-new-sale" v-show="activeTab === 'addNewSale'">
+            <div class="center-input">
+                <label for="productId">Product ID:</label>
+                <input class="input-spaces" type="text" id="sale-product-id" v-model="newSale.productId">
+            </div>
+            <div class="center-input">
+                <label for="salespersonId">Salesperson ID:</label>
+                <input class="input-spaces" type="text" id="sale-salesperson-id" v-model="newSale.salespersonId">
+            </div>
+            <div class="center-input">
+                <label for="customerId">Customer ID:</label>
+                <input class="input-spaces" type="text" id="sale-customer-id" v-model="newSale.customerId">
+            </div>
+            <div class="center-input">
+                <label for="saleDate">Sale Date:</label>
+                <input class="input-spaces" type="date" id="new-sale-sale-date" v-model="newSale.saleDate">
+            </div>
+
+            <button type="button" id="create-sale-button" class="submit-button button"
+                    v-on:click="createSale()">
+                    Submit
+                </button>
+        </form>
 
     </div>
 </template>
 
 <script>
 
-import SalesService from "../services/SalesService.js";
+import SalesService from '../services/SalesService.js';
 import SalesDisplay from '../components/SalesDisplay.vue';
 
 export default {
-    name: "sales-details",
+    name: 'sales-details',
     components: {
         SalesDisplay,
     },
     data() {
         return {
             sales: [],
+            activeTab: 'allSales',
             salesByDate: [],
-            startDate: Date,
-            endDate: Date,
+            startDate: new Date(),
+            endDate: new Date(),
+            newSale: {
+                productId: '',
+                salespersonId: '',
+                customerId: '',
+                saleDate: ''
+            }
         }
     },
     created() {
@@ -88,63 +116,26 @@ export default {
                 alert("Please be sure to enter a start date and end date.");
                 return false;
             }
-            this.startDate = this.moment(this.startDate).format("YYYY-MM-DD");
-            this.endDate = this.moment(this.endDate).format("YYYY-MM-DD");
-            SalesService.getSalesByDate(this.startDate, this.endDate).then((response) => {
+            this.formattedStartDate = this.moment(this.startDate).format("YYYY-MM-DD");
+            this.formattedEndDate = this.moment(this.endDate).format("YYYY-MM-DD");
+            SalesService.getSalesByDate(this.formattedStartDate, this.formattedEndDate).then((response) => {
                 this.salesByDate = response.data;
                 console.dir(this.salesByDate);
             });
         },
+        createSale(){
+            SalesService.createSale(this.newSale).then((response) => {
+                this.newSale = response.data;
+            })
+        },
         showSeeAllSales() {
-            const salesDisplayTab = document.getElementById("see-all-sales-tab");
-            const salesDisplayByDate = document.getElementById("filter-sales-by-date-tab");
-            const newSaleForm = document.getElementById("add-new-sale-tab");
-            const buttonOne = document.getElementById("see-all-sales");
-            const buttonTwo = document.getElementById("filter-sales-by-date");
-            const buttonThree = document.getElementById("add-new-sale");
-            salesDisplayTab.style.display = "block";
-            salesDisplayByDate.style.display = "none";
-            newSaleForm.style.display = "none";
-            buttonOne.style.backgroundColor = "#b1b1b1";
-            buttonTwo.style.backgroundColor = "#f0efef";
-            buttonThree.style.backgroundColor = "#f0efef";
-            buttonOne.style.color = "white";
-            buttonTwo.style.color = "#666666";
-            buttonThree.style.color = "#666666";
+            this.activeTab = 'allSales';
         },
         showFilterSalesByDate() {
-            const salesDisplayTab = document.getElementById("see-all-sales-tab");
-            const salesDisplayByDate = document.getElementById("filter-sales-by-date-tab");
-            const newSaleForm = document.getElementById("add-new-sale-tab");
-            const buttonOne = document.getElementById("see-all-sales");
-            const buttonTwo = document.getElementById("filter-sales-by-date");
-            const buttonThree = document.getElementById("add-new-sale");
-            salesDisplayTab.style.display = "none";
-            salesDisplayByDate.style.display = "block";
-            newSaleForm.style.display = "none";
-            buttonOne.style.backgroundColor = "#f0efef";
-            buttonTwo.style.backgroundColor = "#b1b1b1";
-            buttonThree.style.backgroundColor = "#f0efef";
-            buttonOne.style.color = "#666666";
-            buttonTwo.style.color = "white";
-            buttonThree.style.color = "#666666";
+            this.activeTab = 'filterSalesByDate';
         },
         showAddNewSale() {
-            const salesDisplayTab = document.getElementById("event-form-tab");
-            const salesDisplayByDate = document.getElementById("filter-sales-by-date-tab");
-            const newSaleForm = document.getElementById("add-new-sale-tab");
-            const buttonOne = document.getElementById("see-all-sales");
-            const buttonTwo = document.getElementById("filter-sales-by-date");
-            const buttonThree = document.getElementById("add-new-sale");
-            salesDisplayTab.style.display = "none";
-            salesDisplayByDate.style.display = "none";
-            newSaleForm.style.display = "block";
-            buttonOne.style.backgroundColor = "#f0efef";
-            buttonTwo.style.backgroundColor = "#f0efef";
-            buttonThree.style.backgroundColor = "#b1b1b1";
-            buttonOne.style.color = "#666666";
-            buttonTwo.style.color = "#666666";
-            buttonThree.style.color = "white";
+            this.activeTab = 'addNewSale';
         },
     }
 }
@@ -164,11 +155,6 @@ h1 {
     padding-top: 15px;
 }
 
-#see-all-sales {
-    background-color: #b1b1b1;
-    color: white;
-}
-
 .date-inputs {
     display: flex;
     justify-content: space-around;
@@ -181,15 +167,11 @@ a.router-link-active {
 
 input {
     width: 350px;
-    align-self: center;
     padding: 10px 15px;
     border: 3px solid lightgray;
     text-align: center;
-    justify-content: center;
     border-radius: 10px;
     font-size: 16px;
-    display: flex;
-    flex-grow: 0;
     margin-top: 15px;
 }
 
@@ -224,14 +206,24 @@ h2 {
     display: flex;
 }
 
+.button:active {
+  background-color: #b1b1b1;
+  color: white;
+}
+
+.button:focus {
+  background-color: #b1b1b1;
+  color: white;
+}
+
 #create-sale-button {
-    background-color: #a64d79ff;
+    background-color: #124f5cff;
     color: white;
 }
 
 #invite-button,
 #restaurant-button {
-    background-color: #a64d79ff;
+    background-color: rgb(40, 129, 149);
     color: white;
     border: none;
     text-decoration: none;
@@ -243,8 +235,15 @@ h2 {
     padding: 12px 12px;
 }
 
-#search-directions {
-    padding-top: 40px;
+.center-input {
+    margin: auto;
+    text-align: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.add-new-sale {
+    margin-top: 40px;
 }
 
 placeholder {
@@ -260,67 +259,11 @@ input.date {
     margin-top: 60px;
 }
 
-#invite-button {
-    justify-content: center;
-    display: flex;
-    align-content: center;
-    margin: auto;
-    margin-top: 20px;
-    margin-bottom: 40px;
-    width: 15%;
-}
-
-.event-input {
-    display: flex;
-    justify-content: center;
-    margin: auto;
-    font-family: Arial;
-    color: #909090;
-}
-
-#event-info-button {
-    width: 30%;
-    margin: 10px;
-}
-
-#event-info-button:focus,
-#invite-button:focus,
-#restaurant-button:focus {
-    background: #e06666;
-}
-
-#event-info-button:hover,
-#invite-button:hover,
-#restaurant-button:hover {
-    background: #741b47ff;
-}
-
 body {
     padding-top: 15px;
     display: flex;
     order: bottom;
     z-index: -1;
-}
-
-.left-panel {
-    width: 30%;
-    display: flex;
-    margin: auto;
-    justify-content: center;
-    margin-top: 20px;
-}
-
-form.find-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-.right-panel {
-    width: 100%;
-    justify-content: center;
-    text-align: center;
 }
 
 p {
@@ -331,15 +274,15 @@ p {
     font-weight: normal;
 }
 
-input.location {
-    width: 175px;
+input.input-spaces{
+    display: block;
     padding: 10px 15px;
     border: 3px solid lightgray;
-    text-align: center;
     border-radius: 10px;
     font-size: 16px;
+    justify-content: center;
+    margin: auto;
 }
-
 
 
 label {
@@ -373,8 +316,8 @@ option {
     cursor: pointer;
 }
 
-.submit-button:focus{
-    background-color:#666666;
+.submit-button:focus {
+    background-color: #666666;
 }
 
 

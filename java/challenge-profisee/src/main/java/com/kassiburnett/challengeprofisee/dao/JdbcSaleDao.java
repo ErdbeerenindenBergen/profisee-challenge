@@ -75,7 +75,6 @@ public class JdbcSaleDao implements SaleDao {
         return jdbcTemplate.update(sql, sale.getProductId(), sale.getSalespersonId(), sale.getCustomerId(), sale.getSaleDate()) == 1;
     }
 
-
     private Sale mapRowToSale(SqlRowSet rs) {
         Sale sale = new Sale();
         sale.setSaleId(rs.getInt("sale_id"));
