@@ -16,7 +16,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.kassiburnett.challengeprofisee.dao.UserDao;
 import com.kassiburnett.challengeprofisee.security.jwt.JWTFilter;
-import com.kassiburnett.challengeprofisee.security.jwt.JWTFilter;
 import com.kassiburnett.challengeprofisee.security.jwt.TokenProvider;
 
 @RestController
@@ -36,8 +35,7 @@ public class AuthenticationController {
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseEntity<LoginResponseDto> login(@Valid @RequestBody LoginDto loginDto) {
 
-        UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword());
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword());
 
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
         SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -57,7 +55,7 @@ public class AuthenticationController {
             User user = userDao.findByUsername(newUser.getUsername());
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User Already Exists.");
         } catch (UsernameNotFoundException e) {
-            userDao.create(newUser.getUsername(),newUser.getPassword(), newUser.getRole());
+            userDao.create(newUser.getUsername(), newUser.getPassword(), newUser.getRole());
         }
     }
 }

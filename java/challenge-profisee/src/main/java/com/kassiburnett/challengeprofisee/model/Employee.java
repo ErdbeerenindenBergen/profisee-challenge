@@ -18,9 +18,7 @@ public class Employee {
     private String managerFirstName;
     private String managerLastName;
 
-    public Employee(int employeeId, int idOfManager, String firstName, String lastName, String streetAddress,
-                    String town, String state, int zipCode, long phone, String emailAddress, LocalDate startDate,
-                    LocalDate terminationDate) {
+    public Employee(int employeeId, int idOfManager, String firstName, String lastName, String streetAddress, String town, String state, int zipCode, long phone, String emailAddress, LocalDate startDate, LocalDate terminationDate) {
         this.employeeId = employeeId;
         this.idOfManager = idOfManager;
         this.firstName = firstName;
@@ -35,7 +33,8 @@ public class Employee {
         this.terminationDate = terminationDate;
     }
 
-    public Employee(){}
+    public Employee() {
+    }
 
     public int getEmployeeId() {
         return employeeId;

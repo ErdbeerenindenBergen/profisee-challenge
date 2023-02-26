@@ -4,6 +4,7 @@ import com.kassiburnett.challengeprofisee.model.Sale;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -22,11 +23,7 @@ public class JdbcSaleDao implements SaleDao {
 
     @Override
     public List<Sale> findAllSales() {
-        String sql = "SELECT p.product_name, c.first_name, c.last_name, s.sale_id, s.sale_date, p.sale_price, e.first_name, e.last_name, p.commission_percent " +
-                "FROM sale s " +
-                "JOIN product p ON s.product_id = p.product_id " +
-                "JOIN customer c ON s.customer_id = c.customer_id " +
-                "JOIN employee e ON s.salesperson_id = e.employee_id; ";
+        String sql = "SELECT p.product_name, c.first_name, c.last_name, s.sale_id, s.sale_date, p.sale_price, e.first_name, e.last_name, p.commission_percent " + "FROM sale s " + "JOIN product p ON s.product_id = p.product_id " + "JOIN customer c ON s.customer_id = c.customer_id " + "JOIN employee e ON s.salesperson_id = e.employee_id; ";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
         return returnSaleInformation(results);
     }
@@ -35,12 +32,7 @@ public class JdbcSaleDao implements SaleDao {
     public List<Sale> findSalesByDate(String startDate, String endDate) {
         LocalDate begin = LocalDate.parse(startDate);
         LocalDate end = LocalDate.parse(endDate);
-        String sql = "SELECT p.product_name, c.first_name, c.last_name, s.sale_id, s.sale_date, p.sale_price, e.first_name, e.last_name, p.commission_percent " +
-                "FROM sale s " +
-                "JOIN product p ON s.product_id = p.product_id " +
-                "JOIN customer c ON s.customer_id = c.customer_id " +
-                "JOIN employee e ON s.salesperson_id = e.employee_id " +
-                "WHERE s.sale_date BETWEEN ? AND ?;";
+        String sql = "SELECT p.product_name, c.first_name, c.last_name, s.sale_id, s.sale_date, p.sale_price, e.first_name, e.last_name, p.commission_percent " + "FROM sale s " + "JOIN product p ON s.product_id = p.product_id " + "JOIN customer c ON s.customer_id = c.customer_id " + "JOIN employee e ON s.salesperson_id = e.employee_id " + "WHERE s.sale_date BETWEEN ? AND ?;";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, begin, end);
         return returnSaleInformation(results);
     }
@@ -66,20 +58,20 @@ public class JdbcSaleDao implements SaleDao {
 
     @Override
     public boolean createSale(Sale sale) {
-            String sql = "INSERT INTO sale (product_id, salesperson_id, customer_id, sale_date) VALUES (?, ?, ?, ?);";
-            int rowsInserted = jdbcTemplate.update(sql, sale.getProductId(), sale.getSalespersonId(), sale.getCustomerId(), sale.getSaleDate());
-            if (rowsInserted != 1) {
-                throw new RuntimeException("Failed to insert sale record.");
-            }
-
-            sql = "UPDATE product SET qty_on_hand = qty_on_hand - 1 WHERE product_id = ?;";
-            int rowsUpdated = jdbcTemplate.update(sql, sale.getProductId());
-            if (rowsUpdated != 1) {
-                throw new RuntimeException("Failed to update product stock.");
-            }
-
-            return true;
+        String sql = "INSERT INTO sale (product_id, salesperson_id, customer_id, sale_date) VALUES (?, ?, ?, ?);";
+        int rowsInserted = jdbcTemplate.update(sql, sale.getProductId(), sale.getSalespersonId(), sale.getCustomerId(), sale.getSaleDate());
+        if (rowsInserted != 1) {
+            throw new RuntimeException("Failed to insert sale record.");
         }
+
+        sql = "UPDATE product SET qty_on_hand = qty_on_hand - 1 WHERE product_id = ?;";
+        int rowsUpdated = jdbcTemplate.update(sql, sale.getProductId());
+        if (rowsUpdated != 1) {
+            throw new RuntimeException("Failed to update product stock.");
+        }
+
+        return true;
+    }
 
     private Sale mapRowToSale(SqlRowSet rs) {
         Sale sale = new Sale();

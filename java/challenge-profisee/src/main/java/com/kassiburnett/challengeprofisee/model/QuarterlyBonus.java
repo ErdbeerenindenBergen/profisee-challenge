@@ -19,7 +19,8 @@ public class QuarterlyBonus {
         this.amount = amount;
     }
 
-    public QuarterlyBonus(){}
+    public QuarterlyBonus() {
+    }
 
     public int getBonusId() {
         return bonusId;

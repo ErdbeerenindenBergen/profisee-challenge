@@ -2,6 +2,7 @@ package com.kassiburnett.challengeprofisee.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -45,7 +46,8 @@ public class Sale {
         this.saleDate = saleDate;
     }
 
-    public Sale(){}
+    public Sale() {
+    }
 
     public int getSaleId() {
         return saleId;

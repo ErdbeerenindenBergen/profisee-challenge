@@ -47,6 +47,9 @@
               <router-link class="nav-link" v-bind:to="{ name: 'sales' }">Sales</router-link>
             </li>
             <li class="nav-item" @click="mobileMenu()">
+              <router-link class="nav-link" v-bind:to="{ name: 'quarterly-commissions-reports' }">Commissions</router-link>
+            </li>
+            <li class="nav-item" @click="mobileMenu()">
               <router-link class="nav-link" active-class="active" v-bind:to="{ name: 'log-in' }"
                 v-if="$store.state.token === ''">Log in</router-link>
               <router-link class="nav-link" v-bind:to="{ name: 'log-out' }" v-if="$store.state.token != ''">Log
@@ -298,7 +301,7 @@ a:hover {
     padding-right: 20px;
   }
 
-  #tb-logo {
+  #bespoked-bikes-logo {
     padding-left: 15px;
     height: 45px;
     width: auto;
@@ -323,7 +326,7 @@ a:hover {
 
 }
 
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 1340px) {
   .nav-menu {
     position: fixed;
     left: -100%;

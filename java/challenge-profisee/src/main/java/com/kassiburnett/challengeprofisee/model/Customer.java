@@ -14,8 +14,7 @@ public class Customer {
     private String emailAddress;
     private LocalDate startDate;
 
-    public Customer(int customerId, String firstName, String lastName, String streetAddress, String town,
-                    String state, int zipCode, int phone, String emailAddress, LocalDate startDate) {
+    public Customer(int customerId, String firstName, String lastName, String streetAddress, String town, String state, int zipCode, int phone, String emailAddress, LocalDate startDate) {
         this.customerId = customerId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -28,7 +27,8 @@ public class Customer {
         this.startDate = startDate;
     }
 
-    public Customer(){}
+    public Customer() {
+    }
 
     public int getCustomerId() {
         return customerId;

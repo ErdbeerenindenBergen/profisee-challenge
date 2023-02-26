@@ -4,6 +4,7 @@ import com.kassiburnett.challengeprofisee.dao.SaleDao;
 import com.kassiburnett.challengeprofisee.model.Sale;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @CrossOrigin
@@ -20,7 +21,7 @@ public class SaleController {
 
     @PreAuthorize("hasRole('ROLE_USER')")
     @RequestMapping(path = "", method = RequestMethod.GET)
-    public List<Sale> getAllSales(){
+    public List<Sale> getAllSales() {
         return saleDao.findAllSales();
     }
 

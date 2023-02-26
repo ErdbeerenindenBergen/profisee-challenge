@@ -1,7 +1,7 @@
 BEGIN TRANSACTION;
 
-DROP TABLE IF EXISTS bespoked_user, quarterly_bonus, discount, sale, product, customer, employee;
-DROP SEQUENCE IF EXISTS seq_user_id, seq_product_id, seq_discount_id, seq_customer_id, seq_employee_id, seq_sale_id, seq_quarterly_bonus_id;
+DROP TABLE IF EXISTS bespoked_user, discount, sale, product, customer, employee;
+DROP SEQUENCE IF EXISTS seq_user_id, seq_product_id, seq_discount_id, seq_customer_id, seq_employee_id, seq_sale_id;
 
 CREATE SEQUENCE seq_user_id
     INCREMENT BY 1
@@ -118,25 +118,6 @@ CREATE TABLE sale
         REFERENCES employee (employee_id),
     CONSTRAINT "FK_sale_customer" FOREIGN KEY (customer_id)
         REFERENCES customer (customer_id)
-);
-
-CREATE SEQUENCE seq_quarterly_bonus_id
-    INCREMENT BY 1
-    START WITH 9001
-    NO MAXVALUE;
-
-CREATE TABLE quarterly_bonus
-(
-    quarterly_bonus_id int NOT NULL DEFAULT nextval('seq_quarterly_bonus_id'::regclass),
-    salesperson_id integer NOT NULL,
-    bonus_year integer NOT NULL,
-    quarter integer NOT NULL,
-    amount numeric NOT NULL,
-    CONSTRAINT "PK_quarterly_bonus" PRIMARY KEY (quarterly_bonus_id),
-    CONSTRAINT "FK_quarterly_bonus_employee" FOREIGN KEY (salesperson_id)
-        REFERENCES employee (employee_id),
-    CHECK (quarter BETWEEN 1 AND 4),
-    CHECK (bonus_year BETWEEN 1800 AND 3000)
 );
 
 DROP USER IF EXISTS bespoked_owner;

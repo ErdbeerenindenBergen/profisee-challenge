@@ -10,8 +10,7 @@ public class Discount {
     private LocalDate endDate;
     private BigDecimal discountPercentage;
 
-    public Discount(int discountId, int productId, LocalDate beginDate, LocalDate endDate,
-                    BigDecimal discountPercentage) {
+    public Discount(int discountId, int productId, LocalDate beginDate, LocalDate endDate, BigDecimal discountPercentage) {
         this.discountId = discountId;
         this.productId = productId;
         this.beginDate = beginDate;
@@ -19,7 +18,8 @@ public class Discount {
         this.discountPercentage = discountPercentage;
     }
 
-    public Discount(){}
+    public Discount() {
+    }
 
     public int getDiscountId() {
         return discountId;

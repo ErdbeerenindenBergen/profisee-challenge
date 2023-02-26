@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class JdbcCustomerDao implements CustomerDao{
+public class JdbcCustomerDao implements CustomerDao {
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -24,7 +24,7 @@ public class JdbcCustomerDao implements CustomerDao{
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
 
         List<Customer> customers = new ArrayList<>();
-        while(results.next()) {
+        while (results.next()) {
             Customer customer = mapRowToCustomer(results);
             customers.add(customer);
         }
@@ -33,28 +33,9 @@ public class JdbcCustomerDao implements CustomerDao{
 
     @Override
     public Customer updateCustomer(Customer customer) {
-        String sql = "UPDATE customer SET " +
-                "first_name = ?, " +
-                "last_name = ?, " +
-                "street_address = ?, " +
-                "town = ?, " +
-                "customer_state = ?, " +
-                "zip_code = ?, " +
-                "phone = ?, " +
-                "email_address = ?, " +
-                "start_date = ? " +
-                "WHERE customer_id = ?;";
+        String sql = "UPDATE customer SET " + "first_name = ?, " + "last_name = ?, " + "street_address = ?, " + "town = ?, " + "customer_state = ?, " + "zip_code = ?, " + "phone = ?, " + "email_address = ?, " + "start_date = ? " + "WHERE customer_id = ?;";
 
-        jdbcTemplate.update(sql, customer.getFirstName(),
-                customer.getLastName(),
-                customer.getStreetAddress(),
-                customer.getTown(),
-                customer.getState(),
-                customer.getZipCode(),
-                customer.getPhone(),
-                customer.getEmailAddress(),
-                customer.getStartDate(),
-                customer.getCustomerId());
+        jdbcTemplate.update(sql, customer.getFirstName(), customer.getLastName(), customer.getStreetAddress(), customer.getTown(), customer.getState(), customer.getZipCode(), customer.getPhone(), customer.getEmailAddress(), customer.getStartDate(), customer.getCustomerId());
         return customer;
     }
 

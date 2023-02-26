@@ -13,8 +13,7 @@ public class Product {
     private BigDecimal commissionPercent;
     private long upcCode;
 
-    public Product(int productId, String name, String manufacturer, String style, BigDecimal purchasePrice,
-                   BigDecimal salePrice, int qtyOnHand, BigDecimal commissionPercent, int upcCode) {
+    public Product(int productId, String name, String manufacturer, String style, BigDecimal purchasePrice, BigDecimal salePrice, int qtyOnHand, BigDecimal commissionPercent, int upcCode) {
         this.productId = productId;
         this.name = name;
         this.manufacturer = manufacturer;
@@ -26,7 +25,8 @@ public class Product {
         this.upcCode = upcCode;
     }
 
-    public Product(){}
+    public Product() {
+    }
 
     public int getProductId() {
         return productId;

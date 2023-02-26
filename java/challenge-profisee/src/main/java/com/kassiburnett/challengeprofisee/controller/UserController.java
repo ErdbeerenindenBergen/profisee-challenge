@@ -4,7 +4,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+
 import java.util.List;
+
 import com.kassiburnett.challengeprofisee.dao.UserDao;
 import com.kassiburnett.challengeprofisee.model.User;
 
@@ -17,7 +19,9 @@ public class UserController {
 
     UserDao userDao;
 
-    public UserController(UserDao userDao) { this.userDao = userDao;}
+    public UserController(UserDao userDao) {
+        this.userDao = userDao;
+    }
 
     @PreAuthorize("hasRole('ROLE_USER')")
     @RequestMapping(path = "", method = RequestMethod.GET)
@@ -26,7 +30,7 @@ public class UserController {
     }
 
     @PreAuthorize("hasRole('ROLE_USER')")
-    @RequestMapping (path = "/{userId}", method = RequestMethod.GET)
+    @RequestMapping(path = "/{userId}", method = RequestMethod.GET)
     public User getUserByUserId(@PathVariable int userId) {
         User user = userDao.getUserById(userId);
         if (user == null) {
@@ -37,7 +41,7 @@ public class UserController {
     }
 
     @PreAuthorize("hasRole('ROLE_USER')")
-    @RequestMapping (path = "/{username}", method = RequestMethod.GET)
+    @RequestMapping(path = "/{username}", method = RequestMethod.GET)
     public User findByUsername(String username) {
         User user = userDao.findByUsername(username);
         if (user == null) {
@@ -48,7 +52,7 @@ public class UserController {
     }
 
     @PreAuthorize("hasRole('ROLE_USER')")
-    @RequestMapping (path = "user/userId/{username}", method = RequestMethod.GET)
+    @RequestMapping(path = "user/userId/{username}", method = RequestMethod.GET)
     public int findIdByUsername(String username) {
         return userDao.findIdByUsername(username);
     }
