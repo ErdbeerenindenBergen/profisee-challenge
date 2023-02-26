@@ -47,11 +47,15 @@ public class JdbcQuarterlyBonusDao implements QuarterlyBonusDao {
             endDate = LocalDate.parse("12/31/" + yearString, df);
         }
         String sql = "SELECT e.first_name || ' ' || e.last_name AS salesperson_name, " +
-                " ROUND(SUM(p.sale_price * p.commission_percent),2) AS commission " +
-                " FROM sale s " + " JOIN product p ON s.product_id = p.product_id " +
+                " ROUND(SUM(p.sale_price * (1 - COALESCE(d.discount_percentage, 0)) * p.commission_percent), 2) AS commission " +
+                " FROM sale s " +
+                " JOIN product p ON s.product_id = p.product_id " +
                 " JOIN employee e ON s.salesperson_id = e.employee_id " +
+                " LEFT JOIN discount d ON p.product_id = d.product_id " +
+                " AND s.sale_date BETWEEN d.begin_date AND d.end_date " +
                 " WHERE s.sale_date BETWEEN ? AND ? AND s.salesperson_id = ? " +
-                " GROUP BY e.employee_id " + " ORDER BY commission DESC;";
+                " GROUP BY e.employee_id " +
+                " ORDER BY commission DESC; ";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, beginDate, endDate, employeeId);
         while (results.next()) {
             commissionReport.setSalespersonName(results.getString(1));
