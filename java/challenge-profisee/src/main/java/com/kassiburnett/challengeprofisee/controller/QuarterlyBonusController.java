@@ -5,6 +5,8 @@ import com.kassiburnett.challengeprofisee.model.CommissionReport;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @CrossOrigin
 @RestController
 @PreAuthorize("isAuthenticated()")
@@ -22,6 +24,13 @@ public class QuarterlyBonusController {
     @RequestMapping(path = "/{quarter}/{year}/{employeeId}", method = RequestMethod.GET)
     public CommissionReport getCommissionReport(@PathVariable("quarter") int quarter, @PathVariable("year") int year, @PathVariable("employeeId") int employeeId) {
         return quarterlyBonusDao.getQuarterlyCommissionReport(quarter, year, employeeId);
+    }
+
+    @CrossOrigin
+    @PreAuthorize("hasRole('ROLE_USER')")
+    @RequestMapping(path = "/{quarter}/{year}", method = RequestMethod.GET)
+    public List<CommissionReport> getAllCommissionsByQuarter(@PathVariable("quarter") int quarter, @PathVariable("year") int year) {
+        return quarterlyBonusDao.getAllCommissionReportsByQuarter(quarter, year);
     }
 
 }

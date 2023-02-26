@@ -9,4 +9,8 @@ export default {
     getCommissionReport(quarter, year, employeeId){
         return http.get(`/commissions/${quarter}/${year}/${employeeId}`);
     },
+
+    getAllCommissionReports(quarter, year){
+        return http.get(`/commissions/${quarter}/${year}`);
+    },
 }

@@ -8,4 +8,5 @@ public interface QuarterlyBonusDao {
 
     CommissionReport getQuarterlyCommissionReport(int quarter, int year, int employeeId);
 
+    List<CommissionReport> getAllCommissionReportsByQuarter(int quarter, int year);
 }
