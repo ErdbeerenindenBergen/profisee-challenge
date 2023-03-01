@@ -20,7 +20,7 @@ public class JdbcProductDao implements ProductDao {
 
     @Override
     public List<Product> findAllProducts() {
-        String sql = "SELECT * FROM product ORDER BY product_id ASC ;";
+        String sql = "SELECT * FROM product ORDER BY product_id ASC;";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
         List<Product> products = new ArrayList<>();
         while (results.next()) {
@@ -32,14 +32,18 @@ public class JdbcProductDao implements ProductDao {
 
     @Override
     public Product updateProduct(Product product) {
-        String sql = "UPDATE product SET product_name = ?, manufacturer = ?, product_style = ?, " + " purchase_price = ?, sale_price = ?, qty_on_hand = ?, commission_percent = ?, upc_code = ? " + " WHERE product_id=?;";
-        jdbcTemplate.update(sql, product.getName(), product.getManufacturer(), product.getStyle(), product.getPurchasePrice(), product.getSalePrice(), product.getQtyOnHand(), product.getCommissionPercent(), product.getUpcCode(), product.getProductId());
+        String sql = "UPDATE product SET product_name = ?, manufacturer = ?, product_style = ?, " +
+                " purchase_price = ?, sale_price = ?, qty_on_hand = ?, commission_percent = ?, upc_code = ? " +
+                " WHERE product_id=?;";
+        jdbcTemplate.update(sql, product.getName(), product.getManufacturer(), product.getStyle(),
+                product.getPurchasePrice(), product.getSalePrice(), product.getQtyOnHand(),
+                product.getCommissionPercent(), product.getUpcCode(), product.getProductId());
         return product;
     }
 
     @Override
     public Product findProductById(int productId) {
-        String sql = "SELECT * FROM product WHERE product_id = ? ;";
+        String sql = "SELECT * FROM product WHERE product_id = ?;";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, productId);
         Product product = mapToRow(results);
         return product;
@@ -53,8 +57,11 @@ public class JdbcProductDao implements ProductDao {
 
     @Override
     public boolean createProduct(Product product) {
-        String sql = "INSERT INTO product (product_name, manufacturer, product_style, purchase_price, sale_price, qty_on_hand, commission_percent, upc_code) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-        return jdbcTemplate.update(sql, product.getName(), product.getManufacturer(), product.getStyle(), product.getPurchasePrice(), product.getSalePrice(), product.getQtyOnHand(), product.getCommissionPercent(), product.getUpcCode()) == 1;
+        String sql = "INSERT INTO product (product_name, manufacturer, product_style, purchase_price, " +
+                " sale_price, qty_on_hand, commission_percent, upc_code) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+        return jdbcTemplate.update(sql, product.getName(), product.getManufacturer(), product.getStyle(),
+                product.getPurchasePrice(), product.getSalePrice(), product.getQtyOnHand(),
+                product.getCommissionPercent(), product.getUpcCode()) == 1;
     }
 
     public Product mapToRow(SqlRowSet rs) {

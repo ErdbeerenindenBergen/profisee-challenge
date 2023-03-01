@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class JdbcQuarterlyBonusDao implements QuarterlyBonusDao {
+public class JdbcCommissionReportDao implements CommissionReportDao {
 
     private final JdbcTemplate jdbcTemplate;
     LocalDate beginDate = null;
@@ -19,7 +19,7 @@ public class JdbcQuarterlyBonusDao implements QuarterlyBonusDao {
     String yearString = "";
     DateTimeFormatter df = DateTimeFormatter.ofPattern("MM/dd/yyyy");
 
-    public JdbcQuarterlyBonusDao(JdbcTemplate jdbcTemplate) {
+    public JdbcCommissionReportDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
@@ -55,7 +55,7 @@ public class JdbcQuarterlyBonusDao implements QuarterlyBonusDao {
                 " AND s.sale_date BETWEEN d.begin_date AND d.end_date " +
                 " WHERE s.sale_date BETWEEN ? AND ? AND s.salesperson_id = ? " +
                 " GROUP BY e.employee_id " +
-                " ORDER BY commission DESC; ";
+                " ORDER BY commission DESC;";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, beginDate, endDate, employeeId);
         while (results.next()) {
             commissionReport.setSalespersonName(results.getString(1));
@@ -93,7 +93,7 @@ public class JdbcQuarterlyBonusDao implements QuarterlyBonusDao {
                 " AND s.sale_date BETWEEN d.begin_date AND d.end_date " +
                 " WHERE s.sale_date BETWEEN ? AND ? " +
                 " GROUP BY e.employee_id " +
-                " ORDER BY commission DESC; ";
+                " ORDER BY commission DESC;";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, beginDate, endDate);
         while (results.next()) {
             CommissionReport commissionReport = new CommissionReport();

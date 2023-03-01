@@ -15,7 +15,7 @@ import SalesEntryConfirmation from '../views/SaleEntryConfirmation.vue';
 Vue.use(Router);
 
 const router = new Router({
-  mode: 'history',
+  mode: 'hash',
   base: process.env.BASE_URL,
   routes: [
     {
@@ -87,7 +87,7 @@ const router = new Router({
       name: "sales",
       component: Sales,
       meta: {
-        requiresAuth: false
+        requiresAuth: true
       }
     },
     {

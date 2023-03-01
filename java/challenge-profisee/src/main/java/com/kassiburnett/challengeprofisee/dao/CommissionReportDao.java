@@ -4,7 +4,7 @@ import com.kassiburnett.challengeprofisee.model.CommissionReport;
 
 import java.util.List;
 
-public interface QuarterlyBonusDao {
+public interface CommissionReportDao {
 
     CommissionReport getQuarterlyCommissionReport(int quarter, int year, int employeeId);
 

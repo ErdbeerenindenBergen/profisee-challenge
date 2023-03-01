@@ -120,7 +120,6 @@ export default {
             this.formattedEndDate = this.moment(this.endDate).format("YYYY-MM-DD");
             SalesService.getSalesByDate(this.formattedStartDate, this.formattedEndDate).then((response) => {
                 this.salesByDate = response.data;
-                console.dir(this.salesByDate);
             });
         },
         createSale() {

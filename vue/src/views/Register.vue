@@ -138,7 +138,7 @@ input {
 
 a.register-link {
   display: flex;
-  color: #a64d79ff;
+  color: #124f5cff;
   font-size: 25px;
   font-weight: bold;
 }
@@ -168,7 +168,7 @@ input.form-control:focus {
 }
 
 #create-account-button {
-  background-color: #a64d79ff;
+  background-color: #124f5cff;
   color: white;
   border: none;
   text-decoration: none;
@@ -181,7 +181,7 @@ input.form-control:focus {
 }
 
 button.submit:hover {
-  background-color: plum;
+  background-color: rgb(40, 129, 149);
   color: white;
   box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24),
     0 17px 50px 0 rgba(0, 0, 0, 0.19);

@@ -80,7 +80,8 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return id == user.id && activated == user.activated && Objects.equals(username, user.username) && Objects.equals(password, user.password) && Objects.equals(authorities, user.authorities);
+        return id == user.id && activated == user.activated && Objects.equals(username, user.username) &&
+                Objects.equals(password, user.password) && Objects.equals(authorities, user.authorities);
     }
 
     @Override
@@ -90,7 +91,8 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" + "id=" + id + ", username='" + username + '\'' + ", activated=" + activated + ", authorities=" + authorities + '}';
+        return "User{" + "id=" + id + ", username='" + username + '\'' + ", activated=" + activated + ", " +
+                "authorities=" + authorities + '}';
     }
 }
 

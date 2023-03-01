@@ -1,8 +1,6 @@
 package com.kassiburnett.challengeprofisee.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import java.math.BigDecimal;
 
 public class CommissionReport {
@@ -56,6 +54,5 @@ public class CommissionReport {
     public void setYear(int year) {
         this.year = year;
     }
-
 
 }

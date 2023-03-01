@@ -61,12 +61,13 @@
 
         <div class="buttons">
             <div class="right-side-customers">
-                <button class="edit-button button" id="see-edit-inputs" 
-                :class="{ 'active-button': activeTab === 'edits' }" @click="toggleEditInputs()">
-                Edit</button>
+                <button class="edit-button button" id="see-edit-inputs" :class="{ 'active-button': activeTab === 'edits' }"
+                    @click="toggleEditInputs()">
+                    Edit</button>
             </div>
             <div class="right-side-customers">
-                <button class="save-button button"  v-show="activeTab === 'edits'" v-on:click="updateCustomer()">Save</button>
+                <button class="save-button button" v-show="activeTab === 'edits'"
+                    v-on:click="updateCustomer()">Save</button>
             </div>
         </div>
 
@@ -118,7 +119,7 @@ export default {
             } return $loggedIn;
         },
         toggleEditInputs() {
-            if(this.activeTab == 'edits') {
+            if (this.activeTab == 'edits') {
                 this.activeTab = 'info';
             } else {
                 this.activeTab = 'edits';
@@ -191,5 +192,11 @@ input {
 
 .save-button:hover {
     background-color: rgb(31, 170, 117);
+}
+
+@media screen and (max-width: 800px) and (min-width: 200px) {
+    input {
+        width: 150px;
+    }
 }
 </style>

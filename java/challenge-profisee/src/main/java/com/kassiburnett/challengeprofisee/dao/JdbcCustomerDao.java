@@ -1,7 +1,6 @@
 package com.kassiburnett.challengeprofisee.dao;
 
 import com.kassiburnett.challengeprofisee.model.Customer;
-import com.kassiburnett.challengeprofisee.model.Employee;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
@@ -20,7 +19,7 @@ public class JdbcCustomerDao implements CustomerDao {
 
     @Override
     public List<Customer> findAllCustomers() {
-        String sql = "SELECT * FROM customer ORDER BY customer_id ASC ";
+        String sql = "SELECT * FROM customer ORDER BY customer_id ASC;";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
 
         List<Customer> customers = new ArrayList<>();
@@ -33,7 +32,9 @@ public class JdbcCustomerDao implements CustomerDao {
 
     @Override
     public Customer updateCustomer(Customer customer) {
-        String sql = "UPDATE customer SET " + "first_name = ?, " + "last_name = ?, " + "street_address = ?, " + "town = ?, " + "customer_state = ?, " + "zip_code = ?, " + "phone = ?, " + "email_address = ?, " + "start_date = ? " + "WHERE customer_id = ?;";
+        String sql = "UPDATE customer SET " + "first_name = ?, " + "last_name = ?, " + "street_address = ?, " +
+                "town = ?, " + "customer_state = ?, " + "zip_code = ?, " + "phone = ?, " + "email_address = ?, " +
+                "start_date = ? " + "WHERE customer_id = ?;";
 
         jdbcTemplate.update(sql, customer.getFirstName(), customer.getLastName(), customer.getStreetAddress(), customer.getTown(), customer.getState(), customer.getZipCode(), customer.getPhone(), customer.getEmailAddress(), customer.getStartDate(), customer.getCustomerId());
         return customer;
@@ -41,7 +42,8 @@ public class JdbcCustomerDao implements CustomerDao {
 
     @Override
     public boolean createCustomer(Customer customer) {
-        String sql = "INSERT INTO customer (first_name, last_name, street_address, town, customer_state, zip_code, phone, email_address, start_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO customer (first_name, last_name, street_address, town, customer_state, zip_code, " +
+                " phone, email_address, start_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
         return jdbcTemplate.update(sql, customer.getFirstName(), customer.getLastName(), customer.getStreetAddress(),
                 customer.getTown(), customer.getState(), customer.getZipCode(), customer.getPhone(),
                 customer.getEmailAddress(), customer.getStartDate()) == 1;

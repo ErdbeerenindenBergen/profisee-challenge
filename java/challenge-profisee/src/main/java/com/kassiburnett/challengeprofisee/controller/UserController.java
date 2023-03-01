@@ -12,7 +12,6 @@ import com.kassiburnett.challengeprofisee.model.User;
 
 @RestController
 @PreAuthorize("isAuthenticated()")
-//"user" is added to BASE_API_URL
 @RequestMapping("user")
 @CrossOrigin
 public class UserController {
@@ -42,7 +41,7 @@ public class UserController {
 
     @PreAuthorize("hasRole('ROLE_USER')")
     @RequestMapping(path = "/{username}", method = RequestMethod.GET)
-    public User findByUsername(String username) {
+    public User getUserByUsername(String username) {
         User user = userDao.findByUsername(username);
         if (user == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found.");
@@ -53,7 +52,7 @@ public class UserController {
 
     @PreAuthorize("hasRole('ROLE_USER')")
     @RequestMapping(path = "user/userId/{username}", method = RequestMethod.GET)
-    public int findIdByUsername(String username) {
+    public int getIdByUsername(String username) {
         return userDao.findIdByUsername(username);
     }
 }

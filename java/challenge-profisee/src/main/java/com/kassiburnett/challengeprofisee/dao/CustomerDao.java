@@ -6,7 +6,6 @@ import java.util.List;
 
 public interface CustomerDao {
 
-    //displays a list of customers
     List<Customer> findAllCustomers();
 
     Customer updateCustomer(Customer customer);

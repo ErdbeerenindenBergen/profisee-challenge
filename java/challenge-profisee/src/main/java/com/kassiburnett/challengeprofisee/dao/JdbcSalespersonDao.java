@@ -19,7 +19,11 @@ public class JdbcSalespersonDao implements SalespersonDao {
 
     @Override
     public List<Employee> findAll() {
-        String sql = "SELECT e.employee_id, e.id_of_manager, e.first_name, e.last_name, \n" + " e.street_address, e.town, e.employee_state, e.zip_code, e.phone, e.email_address, \n" + " e.start_date, e.termination_date, m.first_name AS manager_first_name, \n" + " m.last_name AS manager_last_name \n" + " FROM employee e LEFT JOIN employee m ON e.id_of_manager = m.employee_id ORDER BY employee_id ASC ;";
+        String sql = "SELECT e.employee_id, e.id_of_manager, e.first_name, e.last_name, \n" +
+                " e.street_address, e.town, e.employee_state, e.zip_code, e.phone, e.email_address, \n" +
+                " e.start_date, e.termination_date, m.first_name AS manager_first_name, \n" +
+                " m.last_name AS manager_last_name \n" +
+                " FROM employee e LEFT JOIN employee m ON e.id_of_manager = m.employee_id ORDER BY employee_id ASC;";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
 
         List<Employee> salespersons = new ArrayList<>();
@@ -32,15 +36,19 @@ public class JdbcSalespersonDao implements SalespersonDao {
 
     @Override
     public Employee updateSalesperson(Employee employee) {
-        String sql = "UPDATE employee SET id_of_manager = ?, first_name = ?, last_name = ?, " + " street_address = ?, town = ?, employee_state = ?, zip_code = ?, phone = ?, " + " email_address = ?, start_date = ?, termination_date = ? " + " WHERE employee_id = ?;";
+        String sql = "UPDATE employee SET id_of_manager = ?, first_name = ?, last_name = ?, " +
+                " street_address = ?, town = ?, employee_state = ?, zip_code = ?, phone = ?, " +
+                " email_address = ?, start_date = ?, termination_date = ? " +
+                " WHERE employee_id = ?;";
         jdbcTemplate.update(sql, employee.getIdOfManager(), employee.getFirstName(), employee.getLastName(), employee.getStreetAddress(), employee.getTown(), employee.getState(), employee.getZipCode(), employee.getPhone(), employee.getEmailAddress(), employee.getStartDate(), employee.getTerminationDate(), employee.getEmployeeId());
         return employee;
     }
 
     @Override
     public boolean createSalesperson(Employee employee) {
-        String sql = "INSERT INTO employee (id_of_manager, first_name, last_name, street_address, town, employee_state, zip_code, phone, email_address, start_date) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO employee (id_of_manager, first_name, last_name, street_address, town, employee_state, " +
+                " zip_code, phone, email_address, start_date) " +
+                " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
         return jdbcTemplate.update(sql, employee.getIdOfManager(), employee.getFirstName(), employee.getLastName(),
                 employee.getStreetAddress(), employee.getTown(), employee.getState(), employee.getZipCode(),
                 employee.getPhone(), employee.getEmailAddress(), employee.getStartDate()) == 1;

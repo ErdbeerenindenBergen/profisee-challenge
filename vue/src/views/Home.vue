@@ -1,7 +1,5 @@
 <template>
   <div class="home">
-    <!-- <h1>Home</h1>
-    <p>You've logged in!</p> -->
 
     <div class="icons">
       <div id="search">
@@ -91,7 +89,6 @@ h1 {
   padding-top: 150px;
 }
 
-#plan,
 #search {
   display: flex;
   flex-direction: column;
@@ -100,12 +97,6 @@ h1 {
 .search-icon {
   color: rgb(200, 199, 200);
   height: 200px;
-  width: auto;
-}
-
-#plan-icon {
-  color: gray;
-  height: 400px;
   width: auto;
 }
 
@@ -130,6 +121,16 @@ a.router-link-active {
     font-family: "Playfair Display";
     font-weight: normal;
     padding-right: 20px;
+  }
+
+  .search-icon {
+  height: 100px;
+  width: auto;
+}
+
+  .icons{
+    display: block;
+    padding-top: 28px;
   }
 }
 </style>

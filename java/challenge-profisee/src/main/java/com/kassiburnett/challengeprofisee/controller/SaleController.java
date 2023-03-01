@@ -27,7 +27,8 @@ public class SaleController {
 
     @PreAuthorize("hasRole('ROLE_USER')")
     @RequestMapping(path = "/{startDate}/{endDate}", method = RequestMethod.GET)
-    public List<Sale> getSalesByDate(@PathVariable("startDate") String startDate, @PathVariable("endDate") String endDate) {
+    public List<Sale> getSalesByDate(@PathVariable("startDate") String startDate,
+                                     @PathVariable("endDate") String endDate) {
         return saleDao.findSalesByDate(startDate, endDate);
     }
 

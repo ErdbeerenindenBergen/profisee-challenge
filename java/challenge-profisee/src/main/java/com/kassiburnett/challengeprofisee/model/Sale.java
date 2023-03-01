@@ -1,7 +1,6 @@
 package com.kassiburnett.challengeprofisee.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -25,7 +24,9 @@ public class Sale {
     private BigDecimal commissionPercentage;
     private BigDecimal salespersonCommission;
 
-    public Sale(String productName, String customerFirstName, String customerLastName, int saleId, LocalDate saleDate, BigDecimal salePrice, String salespersonFirstName, String salespersonLastName, BigDecimal commissionPercent, BigDecimal salespersonCommission) {
+    public Sale(String productName, String customerFirstName, String customerLastName, int saleId, LocalDate saleDate,
+                BigDecimal salePrice, String salespersonFirstName, String salespersonLastName,
+                BigDecimal commissionPercent, BigDecimal salespersonCommission) {
         this.productName = productName;
         this.customerFirstName = customerFirstName;
         this.customerLastName = customerLastName;

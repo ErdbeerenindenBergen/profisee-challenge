@@ -19,7 +19,6 @@ public class CustomerController {
         this.customerDao = customerDao;
     }
 
-
     @PreAuthorize("hasRole('ROLE_USER')")
     @RequestMapping(path = "", method = RequestMethod.GET)
     public List<Customer> getAllCustomers() {
@@ -29,7 +28,7 @@ public class CustomerController {
     @CrossOrigin
     @PreAuthorize("hasRole('ROLE_USER')")
     @RequestMapping(path = "/update", method = RequestMethod.PUT)
-    public Customer updateProduct(@RequestBody Customer customer) {
+    public Customer updateCustomer(@RequestBody Customer customer) {
         return customerDao.updateCustomer(customer);
     }
 

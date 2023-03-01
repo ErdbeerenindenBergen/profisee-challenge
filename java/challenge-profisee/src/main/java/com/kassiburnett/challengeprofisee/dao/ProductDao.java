@@ -7,10 +7,8 @@ import java.util.List;
 
 public interface ProductDao {
 
-    //displays a list of products
     List<Product> findAllProducts();
 
-    //update a product
     Product updateProduct(Product product);
 
     Product findProductById(int productId);

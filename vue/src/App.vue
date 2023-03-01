@@ -259,7 +259,7 @@ a:hover {
 
 @media screen and (max-width: 800px) and (min-width: 200px) {
   #header-title {
-    font-size: 40px;
+    font-size: 28px;
     margin: 3px;
     justify-content: center;
     align-items: center;

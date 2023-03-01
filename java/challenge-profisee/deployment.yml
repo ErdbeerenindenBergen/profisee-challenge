@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bespokedbikesapi
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bespokedbikesapi
+  template:
+    metadata:
+      labels:
+        app: bespokedbikesapi
+    spec:
+      containers:
+        - name: bespokedbikesapi
+          image: bespokedbikes.azurecr.io/kassiburnett/bespokedbikesapi:latest
+          resources:
+            requests:
+              cpu: "1"
+              memory: "1Gi"
+            limits:
+              cpu: "2"
+              memory: "2Gi"
+          ports:
+            - containerPort: 9000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bespokedbikesapi
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 9000
+      targetPort: 9000
+  selector:
+    app: bespokedbikesapi
